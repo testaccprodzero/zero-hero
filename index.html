@@ -297,12 +297,13 @@
       font-family: "Barlow Condensed", sans-serif;
       font-style: italic; font-weight: 800;
       font-size: clamp(48px, 5.75vw, 100px);
-      line-height: .86;
+      line-height: .8;
       letter-spacing: -.012em;
       text-transform: uppercase;
-      text-shadow: 0 6px 30px rgba(0,0,0,.45);
+      /* shadow as a filter on the whole heading, so the per-line overflow clip can't cut it into boxes */
+      filter: drop-shadow(0 6px 22px rgba(0,0,0,.45));
     }
-    h1 .line { display: block; overflow: hidden; white-space: nowrap; padding: .04em .12em .04em 0; margin-right: -.12em; }
+    h1 .line { display: block; overflow: hidden; white-space: nowrap; padding: .03em .12em .01em 0; margin-right: -.12em; }
     h1 .line > span { display: inline-block; animation: rise .9s cubic-bezier(.2,.8,.2,1) both; }
     h1 .line:nth-child(1) > span { animation-delay: .35s; }
     h1 .line:nth-child(2) > span { animation-delay: .5s; }
@@ -861,8 +862,8 @@
     .work__hint svg { width: 20px; height: 20px; color: var(--red); animation: nudge 2.4s ease-in-out infinite; }
     @keyframes nudge { 0%, 100% { transform: translateX(0) rotate(0); } 50% { transform: translateX(6px) rotate(12deg); } }
 
-    .line { position: relative; margin-top: clamp(20px, 3vw, 40px); overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
-    .line::-webkit-scrollbar { display: none; }
+    .kitline { position: relative; margin-top: clamp(20px, 3vw, 40px); overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+    .kitline::-webkit-scrollbar { display: none; }
     .line__track { position: relative; height: clamp(460px, 40vw, 560px); min-width: 100%; perspective: 1400px; }
     .line__string { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
     .line__string path { fill: none; stroke: #d6d6db; stroke-width: 2; filter: drop-shadow(0 2px 2px rgba(0,0,0,.6)); }
@@ -1316,7 +1317,7 @@
     .finale h2 {
       margin-top: 26px;
       font-size: clamp(58px, 8.2vw, 148px); line-height: .86;
-      text-shadow: 0 8px 40px rgba(0,0,0,.55);
+      filter: drop-shadow(0 8px 30px rgba(0,0,0,.55));
     }
     .finale h2 .line { display: block; overflow: hidden; padding: .04em .1em; }
     .finale h2 .line > span { display: inline-block; transform: translateY(105%); transition: transform 1s cubic-bezier(.2,.8,.2,1); }
@@ -1786,7 +1787,7 @@
       </div>
     </div>
 
-    <div class="line" id="kitline">
+    <div class="kitline" id="kitline">
       <div class="line__track">
         <svg class="line__string" aria-hidden="true"><path /></svg>
         <span class="line__post" aria-hidden="true"></span>
