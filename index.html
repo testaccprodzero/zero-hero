@@ -300,8 +300,7 @@
       line-height: .8;
       letter-spacing: -.012em;
       text-transform: uppercase;
-      /* shadow as a filter on the whole heading, so the per-line overflow clip can't cut it into boxes */
-      filter: drop-shadow(0 6px 22px rgba(0,0,0,.45));
+      text-shadow: 0 6px 30px rgba(0,0,0,.45);
     }
     h1 .line { display: block; overflow: hidden; white-space: nowrap; padding: .03em .12em .01em 0; margin-right: -.12em; }
     h1 .line > span { display: inline-block; animation: rise .9s cubic-bezier(.2,.8,.2,1) both; }
@@ -1317,7 +1316,7 @@
     .finale h2 {
       margin-top: 26px;
       font-size: clamp(58px, 8.2vw, 148px); line-height: .86;
-      filter: drop-shadow(0 8px 30px rgba(0,0,0,.55));
+      text-shadow: 0 8px 40px rgba(0,0,0,.55);
     }
     .finale h2 .line { display: block; overflow: hidden; padding: .04em .1em; }
     .finale h2 .line > span { display: inline-block; transform: translateY(105%); transition: transform 1s cubic-bezier(.2,.8,.2,1); }
