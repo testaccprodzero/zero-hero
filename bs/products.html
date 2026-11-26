@@ -179,6 +179,18 @@
     @keyframes flash { 0% { color: var(--red); } }
     .spec__actions { display: grid; gap: 10px; margin-top: 18px; }
     .spec__reset { margin-top: 12px; width: 100%; text-align: center; font-size: 13px; color: rgba(255,255,255,.5); text-decoration: underline; text-underline-offset: 3px; }
+    .spec__facts { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 18px; border-top: 1px solid rgba(255,255,255,.1); list-style: none; }
+    .spec__facts li { padding: 12px 4px 0; text-align: center; }
+    .spec__facts b { display: block; font-family: "Barlow Condensed", sans-serif; font-weight: 800; font-style: italic; font-size: 22px; color: #fff; }
+    .spec__facts span { font-size: 11.5px; color: rgba(255,255,255,.55); }
+    .spec__trust { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 14px; font-size: 13px; }
+    .spec__trust a { color: rgba(255,255,255,.7); }
+    .spec__trust a:hover { color: #fff; }
+    .spec__crests { display: flex; }
+    .spec__facts--hero { max-width: 420px; margin-top: 26px; grid-template-columns: repeat(3, auto); justify-content: start; gap: 0 28px; border-top: 0; }
+    .spec__facts--hero li { padding: 0; text-align: left; }
+    .spec__trust--hero { justify-content: flex-start; margin-top: 16px; padding-left: 6px; }
+    .spec__crests img { width: 24px; height: 24px; margin-left: -6px; border-radius: 50%; background: #fff; border: 2px solid #121215; object-fit: contain; }
     .spec__reset:hover { color: #fff; }
     .specfab { display: none; }
 
@@ -242,6 +254,18 @@
         <h1>Svaki detalj.<br /><span class="red">Vaš izbor.</span></h1>
         <p class="lead">Kragna, rukavi, manžete, porub, paneli, kroj, brendiranje i tkanina — odaberite svaki detalj dresa, gledajte ga uživo nacrtanog i pošaljite specifikaciju uz upit.</p>
         <div class="hero__stats" id="hero-stats"></div>
+        <!-- trust: order minimum, lead time, references -->
+        <ul class="spec__facts spec__facts--hero">
+          <li><b>10+</b><span>komada minimum</span></li>
+          <li><b>3–4</b><span>sedmice isporuka</span></li>
+          <li><b>48h</b><span>besplatan 3D mockup</span></li>
+        </ul>
+        <div class="spec__trust spec__trust--hero">
+          <span class="spec__crests" aria-hidden="true">
+            <img src="../assets/clubs/unis-logo.jpg" alt="" /><img src="../assets/clubs/lokomotiva-logo.jpg" alt="" /><img src="../assets/clubs/fortuna-logo.jpg" alt="" /><img src="../assets/clubs/sparta-logo.jpg" alt="" /><img src="../assets/clubs/sampion-logo.jpg" alt="" />
+          </span>
+          <a href="index.html#work">Vjeruje nam 1.000+ klubova →</a>
+        </div>
       </div>
       <div class="blueprint">
         <svg id="anatomy" viewBox="-158 -24 616 372" role="img" aria-label="Anatomija dresa s označenim dijelovima"></svg>

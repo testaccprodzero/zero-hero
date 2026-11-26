@@ -15,6 +15,7 @@
       inspo: 'Kit inspiration', size: 'Size guide', ship: 'Shipping & returns',
       home: 'Home', products: 'Products', inspiration: 'Inspiration', work: 'Our Work', about: 'About', sizeG: 'Size Guide', shipping: 'Shipping', faq: 'FAQ', contact: 'Contact',
       quote: 'Get a Team Quote', open: 'Open menu', close: 'Close menu', menu: 'Menu', language: 'Language',
+      waLabel: 'WhatsApp · fastest reply', waHello: 'Hi ZERO, I have a question about a team kit.', cookies: 'Cookie settings',
     },
     de: {
       football: 'Fußball', basketball: 'Basketball', handball: 'Handball', volleyball: 'Volleyball', running: 'Laufen', training: 'Training & Freizeit',
@@ -22,6 +23,7 @@
       inspo: 'Trikot-Inspiration', size: 'Größentabelle', ship: 'Versand & Rückgabe',
       home: 'Start', products: 'Produkte', inspiration: 'Inspiration', work: 'Referenzen', about: 'Über uns', sizeG: 'Größen', shipping: 'Versand', faq: 'FAQ', contact: 'Kontakt',
       quote: 'Angebot anfragen', open: 'Menü öffnen', close: 'Menü schließen', menu: 'Menü', language: 'Sprache',
+      waLabel: 'WhatsApp · schnellste Antwort', waHello: 'Hallo ZERO, ich habe eine Frage zu Teamtrikots.', cookies: 'Cookie-Einstellungen',
     },
     bs: {
       football: 'Fudbal', basketball: 'Košarka', handball: 'Rukomet', volleyball: 'Odbojka', running: 'Trčanje', training: 'Trening i slobodno vrijeme',
@@ -29,6 +31,7 @@
       inspo: 'Inspiracija za dres', size: 'Tabela veličina', ship: 'Dostava i povrat',
       home: 'Početna', products: 'Proizvodi', inspiration: 'Inspiracija', work: 'Naši radovi', about: 'O nama', sizeG: 'Veličine', shipping: 'Dostava', faq: 'FAQ', contact: 'Kontakt',
       quote: 'Zatražite ponudu', open: 'Otvori meni', close: 'Zatvori meni', menu: 'Meni', language: 'Jezik',
+      waLabel: 'WhatsApp · najbrži odgovor', waHello: 'Zdravo ZERO, imam pitanje o dresovima za ekipu.', cookies: 'Postavke kolačića',
     },
   };
   const t = TEXT[LANG] || TEXT.en;
@@ -40,10 +43,34 @@
       ['about.html', 'about'], ['size-guide.html', 'sizeG'], ['shipping.html', 'shipping'], ['index.html#faq', 'faq'], ['index.html#contact', 'contact'],
     ],
     email: 'hello@zero-teamwear.example', // placeholder
+    // ── WhatsApp: international format, digits only (e.g. '38761234567'); '' hides every WhatsApp link ──
+    whatsapp: '38700000000', // placeholder
+
+    // ══════════ TRACKING & LEADS — paste keys here; empty = off (see TRACKING.md) ══════════
+    analytics: {
+      ga4: 'G-3PMVCYYWNY', // GA4 Measurement ID, e.g. 'G-ABC123XYZ' — loads GA4 directly (no Tag Manager needed)
+      gtm: 'GTM-MX3MW64T', // Google Tag Manager ID, e.g. 'GTM-ABC1234' — for ad pixels later
+      clarity: '',        // Microsoft Clarity project ID, e.g. 'abcd1234ef'
+      consentPreview: true, // show the cookie banner even while no IDs are set (draft review); set false at launch if you track nothing
+    },
+    lead: {
+      mode: 'demo',       // 'demo' (shows success, sends nothing) · 'hubspot' (free HubSpot form) · 'webhook' (Make / n8n / Formspree)
+      hubspotPortalId: '', // HubSpot → Settings → Account defaults (Hub ID)
+      hubspotFormId: '',   // HubSpot → Marketing → Forms → your form → share/embed code (formId)
+      hubspotGdpr: true,   // send the "consent to process" checkbox to HubSpot
+      webhookUrl: '',      // e.g. https://hook.eu1.make.com/… or https://formspree.io/f/…
+      value: 100,          // estimated value of one lead (EUR) — refine later (avg order value × close rate)
+      currency: 'EUR',
+    },
   };
+  window.ZERO_CONFIG = SITE; // read by track.js / lead.js
 
   const file = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   const onHome = file === '' || file === 'index.html';
+  // ── WhatsApp (one number for the whole site, greeting in the page language) ──
+  const waIcon = '<svg class="wa-ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5A9.4 9.4 0 0 0 3.9 16.6L2.6 21.4l4.9-1.3A9.4 9.4 0 1 0 12 2.5Zm0 17.1a7.8 7.8 0 0 1-4-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A7.8 7.8 0 1 1 12 19.6Zm4.3-5.8c-.2-.1-1.4-.7-1.6-.8-.2-.1-.4-.1-.5.1l-.7.9c-.1.2-.3.2-.5.1a6.4 6.4 0 0 1-3.2-2.8c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.7-1.7c-.2-.5-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.3.8 3.2.7.5-.1 1.4-.6 1.6-1.2.2-.6.2-1 .1-1.2l-.4-.3Z"/></svg>';
+  const waHref = () => `https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent(t.waHello)}`;
+  const waPretty = () => '+' + SITE.whatsapp.replace(/^(\d{3})(\d{2})(\d{3})(\d+)$/, '$1 $2 $3 $4');
   const arrow = '<svg class="arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10h13M11 4.5 16.5 10 11 15.5"/></svg>';
 
   // ── language switcher links (root = English, /de/ and /bs/ folders) ──
@@ -86,6 +113,7 @@
         <a class="btn btn--primary" href="index.html#contact">${t.quote} ${arrow}</a>
         ${switcher('lang lang--menu')}
         <small>${SITE.email}</small>
+        ${SITE.whatsapp ? `<a class="mmenu__wa" href="${waHref()}" target="_blank" rel="noopener">${waIcon} WhatsApp</a>` : ''}
       </div>
     </div>`;
   document.body.append(menu);
@@ -133,7 +161,25 @@
     if (path && path === file && !href.includes('#') && !a.closest('.mmenu__top, .nav__logo, .footer__brand')) a.setAttribute('aria-current', 'page');
   });
 
+  // ── WhatsApp: contact section + footer socials ──
+  if (SITE.whatsapp) {
+    document.querySelectorAll('.contact__list').forEach(ul => {
+      const ref = ul.querySelector('a[href^="tel:"]');
+      const li = document.createElement('li');
+      li.innerHTML = `<a href="${waHref()}" target="_blank" rel="noopener"><span class="contact__icon" aria-hidden="true">${waIcon}</span><span><small>${t.waLabel}</small><b>${waPretty()}</b></span></a>`;
+      if (ref) ref.closest('li').after(li); else ul.append(li);
+    });
+    document.querySelectorAll('.footer .socials').forEach(s => s.insertAdjacentHTML('beforeend', `<a href="${waHref()}" target="_blank" rel="noopener" aria-label="WhatsApp">${waIcon}</a>`));
+  }
+  document.head.insertAdjacentHTML('beforeend', '<style>.wa-ico{width:20px;height:20px}.contact__icon .wa-ico{width:22px;height:22px}.mmenu__wa{display:inline-flex;align-items:center;gap:8px;margin-top:6px;color:#fff;font-weight:600}.mmenu__wa .wa-ico{color:#25d366}.footer__cookies{background:none;border:0;padding:0;color:inherit;font:inherit;cursor:pointer}.footer__cookies:hover{color:#fff}</style>');
+  // "Cookie settings" in the footer legal links (opens the consent banner from track.js)
+  document.querySelectorAll('.footer__bottom nav').forEach(n => n.insertAdjacentHTML('beforeend', `<button type="button" class="footer__cookies" data-consent-open>${t.cookies}</button>`));
+
+  // ── tracking (consent banner, GA4, Clarity, events) and the quote-form sender ──
+  const trackJs = document.createElement('script'); trackJs.src = ASSETS + 'track.js?v=4'; document.body.appendChild(trackJs);
+  if (document.getElementById('quote-form')) { const leadJs = document.createElement('script'); leadJs.src = ASSETS + 'lead.js?v=1'; document.body.appendChild(leadJs); }
+
   // ── My Kit: one shared draft order across design, options and sizes (assets/kit.js) ──
   // bump v= after editing kit.js so browsers fetch the new copy
-  const kitJs = document.createElement('script'); kitJs.src = ASSETS + 'kit.js?v=4'; document.body.appendChild(kitJs);
+  const kitJs = document.createElement('script'); kitJs.src = ASSETS + 'kit.js?v=5'; document.body.appendChild(kitJs);
 })();

@@ -1374,5 +1374,21 @@
   "Trim": {
     "de": "Besatz",
     "bs": "Rubovi"
+  },
+  "pieces minimum": {
+    "de": "Teile Minimum",
+    "bs": "komada minimum"
+  },
+  "weeks delivery": {
+    "de": "Wochen Lieferzeit",
+    "bs": "sedmice isporuka"
+  },
+  "free 3D mockup": {
+    "de": "gratis 3D-Mockup",
+    "bs": "besplatan 3D mockup"
+  },
+  "Trusted by 1,000+ clubs →": {
+    "de": "Über 1.000 Vereine vertrauen uns →",
+    "bs": "Vjeruje nam 1.000+ klubova →"
   }
 }

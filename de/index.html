@@ -2223,7 +2223,7 @@
     </div>
   </section>
 
-  <!-- CONTACT — demo form (no backend yet); placeholder contact details -->
+  <!-- CONTACT — form is sent by assets/lead.js (mode in site.js: demo / hubspot / webhook); placeholder contact details -->
   <section class="contact" id="contact" aria-labelledby="contact-title">
     <div class="contact__inner">
       <div class="contact__info">
@@ -3180,9 +3180,12 @@
       logo.addEventListener('change', () => {
         document.getElementById('f-logo-name').textContent = logo.files[0] ? logo.files[0].name : 'Wappen oder Logo hochladen';
       });
-      form.addEventListener('submit', e => {
+      form.addEventListener('submit', async e => {
         e.preventDefault();
         if (!form.checkValidity()) { form.reportValidity(); return; }
+        // assets/lead.js sends it (demo / HubSpot / webhook — see site.js) and tracks generate_lead on success
+        const ok = window.ZeroLead ? await window.ZeroLead.submit(form) : true;
+        if (!ok) return;
         form.classList.add('is-sent');
         form.scrollIntoView({ block: 'center' });
       });

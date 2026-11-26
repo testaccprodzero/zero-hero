@@ -55,6 +55,8 @@
   const setPart = (part, data) => {
     const kit = load(); kit[part] = { ...data, at: Date.now() }; save(kit);
     try { sessionStorage.setItem(FLASH, part); } catch (_) {}
+    // tell tracking (track.js) a part was added — the site's "add to quote"
+    window.dispatchEvent(new CustomEvent('zerokit:add', { detail: { part, name: data.name || '', filled: PARTS.filter(p => kit[p]).length } }));
   };
   const filled = kit => PARTS.filter(p => kit[p]);
   // the old per-page hand-offs pasted text into the message box; My Kit replaces them
