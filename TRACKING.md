@@ -7,7 +7,8 @@ After editing, bump the `?v=` numbers where `site.js` loads `track.js` / `lead.j
 | File | Does |
 |---|---|
 | `assets/track.js` | Cookie banner (EN/DE/BS) + Google Consent Mode v2, loads GA4 / Tag Manager / Clarity **only after consent**, one `track()` helper, UTM + click-ID capture, every site event below |
-| `assets/lead.js` | Sends the quote form (demo / HubSpot / webhook) with My Kit + traffic source; fires `generate_lead` **only after a successful send** |
+| `assets/lead.js` | Sends the quote form (demo / **Google Sheet** / HubSpot / webhook) with My Kit + traffic source; spam trap; fires `generate_lead` **only after a successful send** |
+| `integrations/google-sheet-leads.gs` | The Google Apps Script behind the Sheet: one row per request, sales alert email, buyer confirmation (EN/DE/BS), logo saved to Drive |
 | `assets/site.js` | The settings, WhatsApp links (contact, menu, footer), "Cookie settings" link in every footer |
 
 ---
@@ -21,15 +22,17 @@ After editing, bump the `?v=` numbers where `site.js` loads `track.js` / `lead.j
 | 1 | **BigQuery** | GA4 Admin → Product links → BigQuery | Free sandbox link, **daily export**. Turn on from day one — it never backfills. |
 | 1 | Tag Manager | tagmanager.google.com | **Not needed now.** GA4 loads directly. Add `GTM-…` later when ad pixels (Meta, LinkedIn) come — every event is already in `dataLayer`. Don't add a GA4 tag in GTM as well, or events count twice. |
 | 2 | **Key events** | GA4 Admin → Events | After the first events arrive, mark as key events: `generate_lead` (primary), `click_whatsapp`, `click_to_call`, `click_email`, `file_download`. |
-| 3 | **HubSpot CRM** | app.hubspot.com (free) | Marketing → Forms → create a form with: First name, Last name, Email, Phone number, Company name, Message. Copy **portalId** (Hub ID) and **formId** → `SITE.lead.hubspotPortalId / hubspotFormId`, set `mode: 'hubspot'`. If the HubSpot account has GDPR on, keep `hubspotGdpr: true`. |
-| 4 | **Sales alert + auto-reply** | HubSpot form → Options | *Notifications*: email the sales person on each submission. *Follow-up email*: the buyer's confirmation (simple automated email — free). No code. |
+| 3 | **Lead log: Google Sheet** (recommended start) | sheets.google.com + Apps Script | 1. New Sheet "ZERO — Quote requests". 2. **Extensions → Apps Script** → paste `integrations/google-sheet-leads.gs` → set `salesEmail` → Save. 3. Select **setup** → ▶ Run → allow permissions. 4. **Deploy → New deployment → Web app**, Execute as **Me**, Who has access **Anyone** → copy the URL ending in `/exec` → `SITE.lead.sheetUrl`, `mode: 'sheet'`. Every request = one row with a **Status** dropdown (New → Contacted → Mockup sent → Quote sent → Won / Lost / Spam). |
+| 4 | **Sales alert + auto-reply** | built into the Sheet script | Alert email to `salesEmail` (with reply-by-email / WhatsApp links); confirmation email to the buyer in their language (`sendConfirmation: true`). Free Gmail limit ≈ 100 emails/day. |
 | 5 | **WhatsApp** | WhatsApp Business app (free) | Put the number (digits only, international, e.g. `38761234567`) in `SITE.whatsapp`. Set a greeting + away message in the app. |
 | 6 | **Microsoft Clarity** | clarity.microsoft.com (free) | New project → copy the project ID → `SITE.analytics.clarity`. Settings → link to GA4. |
 | 7 | **Consent banner** | built in | Already live (EN/DE/BS). "Only necessary" loads nothing. At launch: update the privacy policy (legal.html) to list GA4, Clarity, HubSpot, and the storage below. |
 | 8 | **Trust on product pages** | built in | Products page shows: 10+ pieces minimum · 3–4 weeks · 48h free mockup · partner crests. **Certifications**: send me the real ones (e.g. OEKO-TEX) and I'll add them. |
 | 9 | **UTMs** | this file, §4 | Every shared link follows the convention; the site keeps first + last source and sends both with each lead. |
 
-**Webhook instead of HubSpot** (`mode: 'webhook'`): Make (free 1,000 ops/month), n8n, or Formspree. Receives every field as multipart form data **including the logo file** (HubSpot's form API can't take files). Use it when you later want n8n to route leads to HubSpot + WhatsApp alerts.
+**Later — HubSpot** (`mode: 'hubspot'`): when the team wants pipelines and follow-up sequences. Free form API, portal + form ID; the Sheet history can be imported.
+
+**Webhook** (`mode: 'webhook'`): Make (free 1,000 ops/month), n8n, or Formspree. Receives every field as multipart form data **including the logo file** (HubSpot's form API can't take files). Use it when you later want n8n to route leads to HubSpot + WhatsApp alerts.
 
 ---
 
@@ -77,7 +80,7 @@ Break down by **session source / medium** and **device**. Second funnel for the 
 
 ## 3. What the lead carries into the CRM
 Club, name (split into first/last), email, phone, sport, team size, needed by, message, **the full My Kit** (design + colours, every option, the size list), language, page — plus **where they came from**: last and first source/medium/campaign, landing page, `gclid` / `fbclid` / `msclkid`, GA4 client ID.
-With HubSpot all of that lands in the contact's **Message** as one readable note (so nothing is lost). Later, create HubSpot properties (`sport`, `utm_source`, …) and map them in `lead.js` → `sendHubspot` for filtering and reports.
+With the Google Sheet each item gets its own column (and "My Kit" one readable cell). With HubSpot it all lands in the contact's **Message** as one readable note. Later, create HubSpot properties (`sport`, `utm_source`, …) and map them in `lead.js` → `sendHubspot` for filtering and reports.
 
 ---
 

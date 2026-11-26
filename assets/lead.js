@@ -1,6 +1,7 @@
 /* ═══════════════════════════════════════════════════════════
    ZERO — quote form sender. Settings: site.js → SITE.lead
      mode 'demo'    → shows success, sends nothing (draft)
+     mode 'sheet'   → Google Sheet via Apps Script (integrations/google-sheet-leads.gs): row + sales alert + buyer confirmation + logo to Drive
      mode 'hubspot' → HubSpot free Forms API (no server, no key needed — portal + form ID)
      mode 'webhook' → multipart POST to Make / n8n / Formspree (includes the logo file)
    Sends club, contact, sport, team size, timing, message, the full My Kit,
@@ -59,6 +60,19 @@
       { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
     if (!r.ok) throw new Error('HubSpot ' + r.status);
   }
+  // Google Sheet (Apps Script web app): url-encoded so it's a "simple" request; the reply is opaque, so a
+  // network failure is the only error we can see — the script itself logs every row it receives
+  const fileToDataUrl = file => new Promise(res => { if (!file || file.size > 8e6) return res(''); const r = new FileReader(); r.onload = () => res(r.result); r.onerror = () => res(''); r.readAsDataURL(file); });
+  async function sendSheet(d, form) {
+    if (!CFG.sheetUrl) throw new Error('Sheet URL missing');
+    const body = new URLSearchParams();
+    Object.entries(d).forEach(([k, v]) => body.append(k, v));
+    body.append('fill_ms', String(Math.round(performance.now() - startedAt)));
+    body.append('company_website', trap(form).value);
+    const logo = form.elements.logo && form.elements.logo.files[0];
+    if (logo) body.append('logo_data', await fileToDataUrl(logo));
+    await fetch(CFG.sheetUrl, { method: 'POST', mode: 'no-cors', body });
+  }
   async function sendWebhook(d, form) {
     if (!CFG.webhookUrl) throw new Error('Webhook URL missing');
     const fd = new FormData();
@@ -76,7 +90,9 @@
     if (btn) { btn.disabled = true; btn.textContent = T.sending; }
     const d = collect(form);
     try {
-      if (CFG.mode === 'hubspot') await sendHubspot(d, form);
+      if (trap(form).value) return true; // a bot filled the hidden field — pretend success, send nothing
+      if (CFG.mode === 'sheet') await sendSheet(d, form);
+      else if (CFG.mode === 'hubspot') await sendHubspot(d, form);
       else if (CFG.mode === 'webhook') await sendWebhook(d, form);
       else await new Promise(r => setTimeout(r, 500)); // demo
       if (window.ZeroTrack) window.ZeroTrack.track('generate_lead', {
@@ -93,5 +109,17 @@
       if (btn) { btn.disabled = false; btn.innerHTML = label; }
     }
   }
+  // spam protection: a hidden field people never see (bots fill it in) + time on page before sending
+  const startedAt = performance.now();
+  function trap(form) {
+    let t = form.querySelector('input[name="company_website"]');
+    if (!t) {
+      form.insertAdjacentHTML('beforeend', '<div aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden"><label>Website<input type="text" name="company_website" tabindex="-1" autocomplete="off" /></label></div>');
+      t = form.querySelector('input[name="company_website"]');
+    }
+    return t;
+  }
+  const qf = document.getElementById('quote-form'); if (qf) trap(qf);
+
   window.ZeroLead = { submit, mode: CFG.mode };
 })();

@@ -54,7 +54,8 @@
       consentPreview: true, // show the cookie banner even while no IDs are set (draft review); set false at launch if you track nothing
     },
     lead: {
-      mode: 'demo',       // 'demo' (shows success, sends nothing) · 'hubspot' (free HubSpot form) · 'webhook' (Make / n8n / Formspree)
+      mode: 'sheet',      // 'demo' (shows success, sends nothing) · 'sheet' (Google Sheet — recommended to start) · 'hubspot' · 'webhook' (Make / n8n / Formspree)
+      sheetUrl: 'https://script.google.com/macros/s/AKfycbzzV0o3IaSGQsaTGg8IN4c3u1ZOzBLlYp8Mym1rGw2GRnoD4DI7_c5SooBDcO8tKyPzOA/exec', // Google Apps Script web-app URL (ends in /exec) — see integrations/google-sheet-leads.gs
       hubspotPortalId: '', // HubSpot → Settings → Account defaults (Hub ID)
       hubspotFormId: '',   // HubSpot → Marketing → Forms → your form → share/embed code (formId)
       hubspotGdpr: true,   // send the "consent to process" checkbox to HubSpot
@@ -177,7 +178,7 @@
 
   // ── tracking (consent banner, GA4, Clarity, events) and the quote-form sender ──
   const trackJs = document.createElement('script'); trackJs.src = ASSETS + 'track.js?v=6'; document.body.appendChild(trackJs);
-  if (document.getElementById('quote-form')) { const leadJs = document.createElement('script'); leadJs.src = ASSETS + 'lead.js?v=1'; document.body.appendChild(leadJs); }
+  if (document.getElementById('quote-form')) { const leadJs = document.createElement('script'); leadJs.src = ASSETS + 'lead.js?v=2'; document.body.appendChild(leadJs); }
 
   // ── My Kit: one shared draft order across design, options and sizes (assets/kit.js) ──
   // bump v= after editing kit.js so browsers fetch the new copy
