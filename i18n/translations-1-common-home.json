@@ -1037,7 +1037,7 @@
   },
   "Get My Free Mockup": {
     "de": "Gratis-Mockup anfordern",
-    "bs": "Besplatna maketa"
+    "bs": "Pošalji upit za besplatnu maketu"
   },
   "Talk to an Expert": {
     "de": "Mit Experten sprechen",
@@ -1486,5 +1486,25 @@
   "The academy crest woven right into the shirt — our players wear the club on their chest.": {
     "de": "Das Akademie-Wappen direkt ins Trikot eingearbeitet — unsere Spieler tragen den Verein auf der Brust.",
     "bs": "Grb akademije utkan u sam dres — naši igrači nose klub na grudima."
+  },
+  "Get a Free Mockup": {
+    "de": "Gratis-Mockup anfordern",
+    "bs": "Besplatna maketa"
+  },
+  "Get Your Free Mockup": {
+    "de": "Holt euch euer Gratis-Mockup",
+    "bs": "Zatražite besplatnu maketu"
+  },
+  "Reply within 1 working day · mockup in 48 h": {
+    "de": "Antwort innerhalb eines Werktags · Mockup in 48 h",
+    "bs": "Odgovor u roku od 1 radnog dana · maketa za 48 h"
+  },
+  "Tell us your sport, squad size and colours. You get a fixed, all-in quote within 1 working day.": {
+    "de": "Nennt uns Sportart, Kadergröße und Farben. Ihr bekommt innerhalb eines Werktags ein verbindliches Komplettangebot.",
+    "bs": "Recite nam sport, veličinu ekipe i boje. U roku od 1 radnog dana dobijate fiksnu, sveobuhvatnu ponudu."
+  },
+  "Start From This Kit": {
+    "de": "Mit diesem Kit starten",
+    "bs": "Kreni od ovog kompleta"
   }
 }

@@ -14,24 +14,27 @@
       kits: 'Kits by sport', custom: 'Customise every detail', customSub: '38 options — collars, cuffs, fits, fabrics',
       inspo: 'Kit inspiration', size: 'Size guide', ship: 'Shipping & returns',
       home: 'Home', products: 'Products', inspiration: 'Inspiration', work: 'Our Work', about: 'About', sizeG: 'Size Guide', shipping: 'Shipping', faq: 'FAQ', contact: 'Contact',
-      quote: 'Get a Team Quote', open: 'Open menu', close: 'Close menu', menu: 'Menu', language: 'Language',
+      quote: 'Get a Free Mockup', open: 'Open menu', close: 'Close menu', menu: 'Menu', language: 'Language',
       waLabel: 'WhatsApp · fastest reply', waHello: 'Hi ZERO, I have a question about a team kit.', cookies: 'Cookie settings',
+      seasonLabel: 'Season deadline', seasonText: 'Order by {date} to have your new kit for the {season}.', seasonDays: '{n} days left', seasonCta: 'Get a free mockup',
     },
     de: {
       football: 'Fußball', basketball: 'Basketball', handball: 'Handball', volleyball: 'Volleyball', running: 'Laufen', training: 'Training & Freizeit',
       kits: 'Trikots nach Sportart', custom: 'Jedes Detail anpassen', customSub: '38 Optionen — Kragen, Bündchen, Schnitte, Stoffe',
       inspo: 'Trikot-Inspiration', size: 'Größentabelle', ship: 'Versand & Rückgabe',
       home: 'Start', products: 'Produkte', inspiration: 'Inspiration', work: 'Referenzen', about: 'Über uns', sizeG: 'Größen', shipping: 'Versand', faq: 'FAQ', contact: 'Kontakt',
-      quote: 'Angebot anfragen', open: 'Menü öffnen', close: 'Menü schließen', menu: 'Menü', language: 'Sprache',
+      quote: 'Gratis-Mockup anfordern', open: 'Menü öffnen', close: 'Menü schließen', menu: 'Menü', language: 'Sprache',
       waLabel: 'WhatsApp · schnellste Antwort', waHello: 'Hallo ZERO, ich habe eine Frage zu Teamtrikots.', cookies: 'Cookie-Einstellungen',
+      seasonLabel: 'Saison-Deadline', seasonText: 'Bis {date} bestellen — dann sind eure neuen Trikots zur {season} da.', seasonDays: 'noch {n} Tage', seasonCta: 'Gratis-Mockup anfordern',
     },
     bs: {
       football: 'Fudbal', basketball: 'Košarka', handball: 'Rukomet', volleyball: 'Odbojka', running: 'Trčanje', training: 'Trening i slobodno vrijeme',
       kits: 'Dresovi po sportu', custom: 'Prilagodite svaki detalj', customSub: '38 opcija — kragne, manžete, krojevi, tkanine',
       inspo: 'Inspiracija za dres', size: 'Tabela veličina', ship: 'Dostava i povrat',
       home: 'Početna', products: 'Proizvodi', inspiration: 'Inspiracija', work: 'Naši radovi', about: 'O nama', sizeG: 'Veličine', shipping: 'Dostava', faq: 'FAQ', contact: 'Kontakt',
-      quote: 'Zatražite ponudu', open: 'Otvori meni', close: 'Zatvori meni', menu: 'Meni', language: 'Jezik',
+      quote: 'Besplatna maketa', open: 'Otvori meni', close: 'Zatvori meni', menu: 'Meni', language: 'Jezik',
       waLabel: 'WhatsApp · najbrži odgovor', waHello: 'Zdravo ZERO, imam pitanje o dresovima za ekipu.', cookies: 'Postavke kolačića',
+      seasonLabel: 'Rok za sezonu', seasonText: 'Naručite do {date} i novi dresovi stižu za {season}.', seasonDays: 'još {n} dana', seasonCta: 'Besplatna maketa',
     },
   };
   const t = TEXT[LANG] || TEXT.en;
@@ -45,6 +48,12 @@
     email: 'hello@zero-teamwear.example', // placeholder
     // ── WhatsApp: international format, digits only (e.g. '38761234567'); '' hides every WhatsApp link ──
     whatsapp: '38700000000', // placeholder
+    // ── season order-by banner: season start dates (MM-DD) and the full lead time in days (design + production + shipping) ──
+    seasons: [
+      { start: '03-01', en: 'spring season', de: 'Frühjahrssaison', bs: 'proljetnu sezonu' },
+      { start: '08-15', en: 'new season in August', de: 'neuen Saison im August', bs: 'novu sezonu u avgustu' },
+    ],
+    leadDays: 35,
 
     // ══════════ TRACKING & LEADS — paste keys here; empty = off (see TRACKING.md) ══════════
     analytics: {
@@ -176,11 +185,67 @@
   // "Cookie settings" in the footer legal links (opens the consent banner from track.js)
   document.querySelectorAll('.footer__bottom nav').forEach(n => n.insertAdjacentHTML('beforeend', `<button type="button" class="footer__cookies" data-consent-open>${t.cookies}</button>`));
 
-  // ── tracking (consent banner, GA4, Clarity, events) and the quote-form sender ──
-  const trackJs = document.createElement('script'); trackJs.src = ASSETS + 'track.js?v=6'; document.body.appendChild(trackJs);
-  if (document.getElementById('quote-form')) { const leadJs = document.createElement('script'); leadJs.src = ASSETS + 'lead.js?v=2'; document.body.appendChild(leadJs); }
+  // ── language: remember an explicit EN / DE / BS choice so the first-visit redirect never overrides it ──
+  document.addEventListener('click', e => { const a = e.target.closest('.lang a[hreflang]'); if (a) { try { localStorage.setItem('zeroLang', a.getAttribute('hreflang')); } catch (_) {} } });
 
-  // ── My Kit: one shared draft order across design, options and sizes (assets/kit.js) ──
+  // ══════════ ZeroUI: one coordinator for everything at the bottom of the screen ══════════
+  // · the cookie banner comes first; other pop-ups wait for the visitor's choice
+  // · toasts sit above whatever panel is at the bottom (CSS var --zero-bottom)
+  const analytics = SITE.analytics || {};
+  const bannerOn = !!(analytics.ga4 || analytics.gtm || analytics.clarity || analytics.consentPreview);
+  const consentDone = () => { if (!bannerOn) return true; try { return !!localStorage.getItem('zeroConsent'); } catch (_) { return true; } };
+  let bottomPx = 0;
+  window.ZeroUI = {
+    consentDone,
+    bottom: () => bottomPx,
+    setBottom(px) { bottomPx = Math.max(0, Math.round(px || 0)); document.documentElement.style.setProperty('--zero-bottom', bottomPx + 'px'); },
+    // run fn once the cookie choice is made (immediately if it already is)
+    afterConsent(fn) { if (consentDone()) fn(); else window.addEventListener('zero:consent', () => fn(), { once: true }); },
+  };
+  document.head.insertAdjacentHTML('beforeend', '<style>.toast{bottom:calc(var(--zero-bottom,0px) + 26px)!important;transition:translate .4s cubic-bezier(.2,.8,.2,1),bottom .3s,opacity .3s,visibility .3s}.toast:not(.show){opacity:0;visibility:hidden}</style>');
+
+  // ══════════ Season order-by banner (top of every page) ══════════
+  // order-by = season start − lead time (design 2 + production 15 working days + shipping ≈ 5 weeks, same as shipping.html)
+  const SEASONS = SITE.seasons || [];
+  (function seasonBanner() {
+    if (!SEASONS.length || document.getElementById('cb-season')) return;
+    try { if (sessionStorage.getItem('zeroSeasonHidden')) return; } catch (_) {}
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const LEAD = (SITE.leadDays || 35) * 864e5;
+    const next = SEASONS.flatMap(s => [0, 1].map(y => { const [m, d] = s.start.split('-').map(Number); const start = new Date(today.getFullYear() + y, m - 1, d); return { s, start, by: new Date(start - LEAD) }; }))
+      .filter(x => x.by >= today).sort((a, b) => a.by - b.by)[0];
+    if (!next) return;
+    const BSM = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+    const date = LANG === 'bs' ? `${next.by.getDate()}. ${BSM[next.by.getMonth()]}` : next.by.toLocaleDateString(LANG === 'de' ? 'de-DE' : 'en-GB', { day: 'numeric', month: 'long' });
+    const days = Math.round((next.by - today) / 864e5);
+    const show = () => {
+      const nav = document.querySelector('.nav'); if (!nav) return;
+      nav.insertAdjacentHTML('beforebegin', `<div class="season" id="cb-season" role="region" aria-label="${t.seasonLabel}">
+        <span><b>${t.seasonText.replace('{date}', date).replace('{season}', next.s[LANG] || next.s.en)}</b>${days <= 21 ? ` <em>${t.seasonDays.replace('{n}', days)}</em>` : ''}</span>
+        <a href="${onHome ? '#contact' : 'index.html#contact'}" data-season-cta>${t.seasonCta} ${arrow}</a>
+        <button type="button" aria-label="${t.close}" data-season-x><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 5l10 10M15 5 5 15"/></svg></button></div>`);
+      const bar = document.getElementById('cb-season');
+      bar.querySelector('[data-season-x]').addEventListener('click', () => { bar.remove(); try { sessionStorage.setItem('zeroSeasonHidden', '1'); } catch (_) {} });
+      bar.querySelector('[data-season-cta]').addEventListener('click', () => window.ZeroTrack && window.ZeroTrack.track('season_banner_click', { days_left: days }));
+    };
+    document.head.insertAdjacentHTML('beforeend', `<style>
+      .season { position: relative; z-index: 60; display: flex; align-items: center; justify-content: center; gap: 8px 18px; flex-wrap: wrap; padding: 9px 48px 9px 16px; background: var(--red, #e1141f); color: #fff; font-size: 14px; line-height: 1.35; text-align: center; animation: seasonIn .5s cubic-bezier(.2,.8,.2,1); }
+      .season b { font-weight: 600; } .season em { font-style: normal; padding: 1px 8px; background: rgba(0,0,0,.22); font-weight: 700; font-size: 12.5px; letter-spacing: .04em; }
+      .season a { display: inline-flex; align-items: center; gap: 6px; font-family: "Barlow Condensed", sans-serif; font-weight: 800; font-size: 15px; letter-spacing: .06em; text-transform: uppercase; color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+      .season a .arrow { width: 14px; height: 14px; }
+      .season button { position: absolute; right: 10px; top: 50%; translate: 0 -50%; width: 30px; height: 30px; display: grid; place-items: center; background: none; border: 0; color: #fff; cursor: pointer; opacity: .85; }
+      .season button svg { width: 15px; height: 15px; }
+      @keyframes seasonIn { from { opacity: 0; translate: 0 -100%; } }
+      @media (max-width: 560px) { .season { font-size: 13px; padding: 8px 40px 8px 12px; } }
+    </style>`);
+    window.ZeroUI.afterConsent(show);
+  })();
+
+  // ── tracking (consent banner, GA4, Clarity, events) and the form sender (quote form + "save your kit") ──
+  const trackJs = document.createElement('script'); trackJs.src = ASSETS + 'track.js?v=7'; document.body.appendChild(trackJs);
+  const leadJs = document.createElement('script'); leadJs.src = ASSETS + 'lead.js?v=3'; document.body.appendChild(leadJs);
+
+  // ── My Kit: the one draft order every page adds to (assets/kit.js) ──
   // bump v= after editing kit.js so browsers fetch the new copy
-  const kitJs = document.createElement('script'); kitJs.src = ASSETS + 'kit.js?v=5'; document.body.appendChild(kitJs);
+  const kitJs = document.createElement('script'); kitJs.src = ASSETS + 'kit.js?v=7'; document.body.appendChild(kitJs);
 })();

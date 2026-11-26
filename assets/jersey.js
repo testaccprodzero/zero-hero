@@ -10,14 +10,14 @@
       neck: 'M70 14 Q100 32 130 14', neckBack: 'M70 14 Q100 22 130 14',
       bar: 'M100 19 L36 31 Q100 25 164 31 Z', inner: 'M70 14 Q100 32 130 14 Q100 22 70 14 Z',
       trims: ['M197 70 L171 86', 'M3 70 L29 86'], trimW: 8,
-      num: 142, crest: [130, 62], brand: [60, 64], folds: ['M70 92 Q82 150 66 206', 'M134 100 Q122 160 138 206', 'M100 180 Q112 196 104 214'],
+      num: 142, crest: [130, 62], brand: [66, 63], brandW: 46, folds: ['M70 92 Q82 150 66 206', 'M134 100 Q122 160 138 206', 'M100 180 Q112 196 104 214'],
     },
     tank: {
       body: 'M64 10 Q100 46 136 10 L150 12 Q148 56 168 72 L165 212 Q100 220 35 212 L32 72 Q52 56 50 12 Z',
       neck: 'M64 10 Q100 46 136 10', neckBack: 'M64 10 Q100 30 136 10',
       bar: 'M100 26 L56 30 Q100 30 144 30 Z', inner: 'M64 10 Q100 46 136 10 Q100 30 64 10 Z',
       trims: ['M150 12 Q148 56 168 72', 'M50 12 Q52 56 32 72'], trimW: 6,
-      num: 148, crest: [124, 72], brand: [70, 76], folds: ['M66 100 Q78 154 62 206', 'M136 104 Q124 160 140 206'],
+      num: 148, crest: [124, 72], brand: [76, 75], brandW: 38, folds: ['M66 100 Q78 154 62 206', 'M136 104 Q124 160 140 206'],
     },
   };
 
@@ -32,6 +32,7 @@
   };
 
   const PATTERNS = {
+    none: () => '', // club artwork (k.fabric) carries the design
     stripes: k => [56, 88, 120, 152].map(x => `<rect x="${x - 8}" y="-40" width="16" height="300" fill="${k.accent}"/>`).join(''),
     pinstripes: k => Array.from({ length: 19 }, (_, i) => `<rect x="${i * 11 - 2}" y="-40" width="2.4" height="300" fill="${k.accent}" opacity=".85"/>`).join(''),
     hoops: k => [52, 96, 140, 184].map(y => `<rect x="0" y="${y}" width="200" height="20" fill="${k.accent}"/>`).join(''),
@@ -62,14 +63,50 @@
       return r;
     },
   };
+  // readable colour on a given shirt colour (WCAG relative luminance): white on dark, near-black on light
+  const lum = hex => {
+    const n = parseInt(String(hex || '#000').replace('#', '').padEnd(6, '0').slice(0, 6), 16);
+    const c = [n >> 16, (n >> 8) & 255, n & 255].map(v => { v /= 255; return v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; });
+    return .2126 * c[0] + .7152 * c[1] + .0722 * c[2];
+  };
+  const contrast = base => (lum(base) > .4 ? '#0b0b0d' : '#ffffff');
+  const esc = v => String(v == null ? '' : v).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const FONT = 'font-family="Barlow Condensed, sans-serif" font-weight="800"';
+
+  // ZERO logo (mark + wordmark) on the chest; falls back to the word if logo.js isn't loaded
+  // patterns that put the accent colour across the left chest, where the logo sits
+  const accentOnChest = k => ['band', 'yoke'].includes(k.pattern) || (['split', 'sash'].includes(k.pattern) && !k.flip);
+  function brand(s, k) {
+    const colour = k.logoColor || contrast(!k.fabric && accentOnChest(k) ? k.accent : k.base);
+    const [cx, cy] = s.brand;
+    if (window.ZeroLogo) return window.ZeroLogo.svg(cx, cy, s.brandW, colour);
+    return `<text x="${cx}" y="${cy + 3}" text-anchor="middle" ${FONT} font-style="italic" font-size="10" fill="${colour}">ZERO</text>`;
+  }
+
   let uid = 0;
+  /**
+   * k: { cut, pattern, base, accent, num, trim?, flip?, number, back, short,
+   *      fabric?, fabricBack?, fabricBox?, crestImg?, logoColor? }
+   * opts: { hanger: true|false }
+   */
   function svg(k, side = 'front', opts = {}) {
-    const s = SHAPES[k.cut], id = 'zj' + (uid++), front = side !== 'back', hanger = opts.hanger !== false;
+    const s = SHAPES[k.cut] || SHAPES.tee, id = 'zj' + (uid++), front = side !== 'back', hanger = opts.hanger !== false;
     const textStroke = 'stroke="rgba(0,0,0,.35)" stroke-width="3" paint-order="stroke"';
     const vb = hanger ? '0 -40 200 260' : '-4 0 208 226';
     // the back of the shirt is cut with the higher back neckline, not the front scoop
     const body = front ? s.body : s.body.replace(s.neck, s.neckBack);
     const pattern = PATTERNS[k.pattern] || PATTERNS.stripes;
+    const num = k.num || contrast(k.base);
+    const fb = k.fabricBox || [2, 28, 171, 212];
+    const fabric = k.fabric ? `<image href="${front ? k.fabric : (k.fabricBack || k.fabric)}" x="${fb[0]}" y="${fb[1]}" width="${fb[2]}" height="${fb[3]}" preserveAspectRatio="none"${front || k.fabricBack ? '' : ' transform="translate(200 0) scale(-1 1)"'}/>` : '';
+    // crest: club image > letters in a circle; real club artwork (fabric) without a crest image already carries its own
+    const crest = k.crestImg
+      ? `<clipPath id="cr${id}"><circle cx="${s.crest[0]}" cy="${s.crest[1]}" r="11"/></clipPath><image href="${k.crestImg}" x="${s.crest[0] - 11}" y="${s.crest[1] - 11}" width="22" height="22" clip-path="url(#cr${id})"/>`
+      : k.fabric ? '' : `<circle cx="${s.crest[0]}" cy="${s.crest[1]}" r="10" fill="${k.accent}" stroke="${num}" stroke-width="1.5"/>
+        <text x="${s.crest[0]}" y="${s.crest[1] + 3}" text-anchor="middle" ${FONT} font-size="7.5" fill="${num}">${esc(k.short)}</text>`;
+    // long club names shrink to fit across the shoulders instead of being cut off
+    const rawBack = String(k.back || '').slice(0, 22), backName = esc(rawBack);
+    const backSize = Math.min(19, Math.max(8, (124 / Math.max(rawBack.length, 1) - 2) / 0.52)).toFixed(1);
     return `<svg viewBox="${vb}" aria-hidden="true">
       <defs>
         <clipPath id="c${id}"><path d="${body}"/></clipPath>
@@ -86,23 +123,23 @@
       <path d="${s.bar}" fill="#3b3b42" stroke="#55555e" stroke-width="1.5" stroke-linejoin="round"/>` : ''}
       <g clip-path="url(#c${id})">
         <rect x="0" y="-40" width="200" height="300" fill="${k.base}"/>
+        ${fabric}
         ${k.flip ? `<g transform="translate(200 0) scale(-1 1)">${pattern(k, id)}</g>` : pattern(k, id)}
         ${s.folds.map(d => `<path d="${d}" fill="none" stroke="#000" stroke-opacity=".16" stroke-width="4" stroke-linecap="round"/>`).join('')}
         <rect x="0" y="-40" width="200" height="300" fill="url(#sh${id})"/>
         <rect x="0" y="-40" width="200" height="300" fill="url(#sv${id})"/>
       </g>
       ${front ? `<path d="${s.inner}" fill="${k.base}"/><path d="${s.inner}" fill="#000" fill-opacity=".45"/>` : ''}
-      <path d="${front ? s.neck : s.neckBack}" fill="none" stroke="${k.trim || (k.accent === k.base ? k.num : k.accent)}" stroke-width="6" stroke-linecap="round"/>
+      <path d="${front ? s.neck : s.neckBack}" fill="none" stroke="${k.trim || (k.accent === k.base ? num : k.accent)}" stroke-width="6" stroke-linecap="round"/>
       ${s.trims.map(d => `<path d="${d}" fill="none" stroke="${k.trim || k.accent}" stroke-width="${s.trimW}"/>`).join('')}
       ${front ? `
-        <text x="100" y="${s.num}" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="800" font-size="58" fill="${k.num}" ${textStroke}>${k.number}</text>
-        <circle cx="${s.crest[0]}" cy="${s.crest[1]}" r="10" fill="${k.accent}" stroke="${k.num}" stroke-width="1.5"/>
-        <text x="${s.crest[0]}" y="${s.crest[1] + 3}" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="800" font-size="7.5" fill="${k.num}">${k.short || ''}</text>
-        <text x="${s.brand[0]}" y="${s.brand[1]}" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-style="italic" font-weight="800" font-size="10" fill="${k.num}" opacity=".9">ZERO</text>`
+        <text x="100" y="${s.num}" text-anchor="middle" ${FONT} font-size="58" fill="${num}" ${textStroke}>${esc(k.number)}</text>
+        ${crest}
+        ${brand(s, k)}`
       : `
-        <text x="100" y="${s.num - 66}" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="800" font-size="19" letter-spacing="2" fill="${k.num}" ${textStroke}>${k.back || ''}</text>
-        <text x="100" y="${s.num + 24}" text-anchor="middle" font-family="Barlow Condensed, sans-serif" font-weight="800" font-size="88" fill="${k.num}" ${textStroke}>${k.number}</text>`}
+        <text x="100" y="${s.num - 66}" text-anchor="middle" ${FONT} font-size="${backSize}" letter-spacing="2" fill="${num}" ${textStroke}>${backName}</text>
+        <text x="100" y="${s.num + 24}" text-anchor="middle" ${FONT} font-size="88" fill="${num}" ${textStroke}>${esc(k.number)}</text>`}
     </svg>`;
   }
-  window.ZeroJersey = { svg, patterns: Object.keys(PATTERNS) };
+  window.ZeroJersey = { svg, contrast, lum, patterns: Object.keys(PATTERNS) };
 })();

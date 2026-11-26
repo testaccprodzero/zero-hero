@@ -30,7 +30,8 @@
       club: val(form, 'club'), name, firstname: parts[0] || '', lastname: parts.slice(1).join(' '),
       email: val(form, 'email'), phone: val(form, 'phone'), sport: val(form, 'sport'), team_size: val(form, 'size'), needed_by: val(form, 'when'),
       message: val(form, 'message'), kit_summary: val(form, 'kit'),
-      lead_type: kit.design && kit.design.from === 'custom' ? 'custom_design' : (kit.design || kit.options) ? 'kit' : 'general',
+      lead_type: kit.intent === 'visit' ? 'factory_visit' : kit.intent === 'sizeset' ? 'size_set' : kit.design && kit.design.from === 'custom' ? 'custom_design' : (kit.design || kit.options) ? 'kit' : 'general',
+      intent: kit.intent || '', share_url: window.ZeroKit ? window.ZeroKit.shareUrl() : '',
       language: LANG, page: location.href.split('?')[0],
       utm_source: last.utm_source || '', utm_medium: last.utm_medium || '', utm_campaign: last.utm_campaign || '', utm_content: last.utm_content || '', utm_term: last.utm_term || '',
       first_source: [first.utm_source, first.utm_medium, first.utm_campaign].filter(Boolean).join(' / '), landing_page: first.landing || '',
@@ -97,7 +98,7 @@
       else await new Promise(r => setTimeout(r, 500)); // demo
       if (window.ZeroTrack) window.ZeroTrack.track('generate_lead', {
         form_id: 'quote', lead_type: d.lead_type, sport: d.sport, team_size: d.team_size, needed_by: d.needed_by,
-        kit_parts_filled: ['design', 'options', 'sizes'].filter(p => kitOf()[p]).length, value: CFG.value || 0, currency: CFG.currency || 'EUR', lead_mode: CFG.mode,
+        kit_parts_filled: ['design', 'options', 'sizes'].filter(p => kitOf()[p]).length, intent: d.intent || 'none', value: CFG.value || 0, currency: CFG.currency || 'EUR', lead_mode: CFG.mode,
       });
       try { localStorage.setItem('zeroLeadSent', new Date().toISOString()); } catch (_) {}
       return true;
@@ -121,5 +122,17 @@
   }
   const qf = document.getElementById('quote-form'); if (qf) trap(qf);
 
-  window.ZeroLead = { submit, mode: CFG.mode };
+  // exit-intent "save your kit": the Sheet script logs a 'Saved kit' row and emails the kit + a resume link
+  async function saveKit(p) {
+    if (!p || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(p.email || '')) return false;
+    try {
+      if (CFG.mode === 'sheet' && CFG.sheetUrl) {
+        const body = new URLSearchParams({ lead_type: 'saved_kit', email: p.email, club: p.design || 'Saved kit', name: '', kit_summary: p.kit_summary || '', share_url: p.share_url || '',
+          language: LANG, page: location.href.split('?')[0], fill_ms: String(Math.round(performance.now() - startedAt)), company_website: '' });
+        await fetch(CFG.sheetUrl, { method: 'POST', mode: 'no-cors', body });
+      } else await new Promise(r => setTimeout(r, 400)); // demo / other modes: nothing to send
+      return true;
+    } catch (_) { return false; }
+  }
+  window.ZeroLead = { submit, saveKit, mode: CFG.mode };
 })();

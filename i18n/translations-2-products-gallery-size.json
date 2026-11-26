@@ -1390,5 +1390,21 @@
   "Trusted by 1,000+ clubs →": {
     "de": "Über 1.000 Vereine vertrauen uns →",
     "bs": "Vjeruje nam 1.000+ klubova →"
+  },
+  "Add Options to My Kit": {
+    "de": "Optionen zu meinem Kit",
+    "bs": "Dodaj opcije u moj komplet"
+  },
+  "Use This Design": {
+    "de": "Dieses Design verwenden",
+    "bs": "Koristi ovaj dizajn"
+  },
+  "Add Shortlist to My Kit": {
+    "de": "Favoriten zu meinem Kit",
+    "bs": "Dodaj favorite u moj komplet"
+  },
+  "Add Sizes to My Kit": {
+    "de": "Größen zu meinem Kit",
+    "bs": "Dodaj veličine u moj komplet"
   }
 }

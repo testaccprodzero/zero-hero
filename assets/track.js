@@ -156,7 +156,7 @@
     cb.classList.toggle('is-settings', !!settings);
     const sb = cb.querySelector('[data-cb="settings"],[data-cb="save"]');
     sb.textContent = settings ? t.save : t.settings; sb.dataset.cb = settings ? 'save' : 'settings';
-    setTimeout(() => cb.classList.add('is-in'), 30); // timer, not rAF: also works in background tabs
+    setTimeout(() => { cb.classList.add('is-in'); if (window.ZeroUI) window.ZeroUI.setBottom(cb.offsetHeight + 16); }, 30); // timer, not rAF: also works in background tabs
   }
   function choose(analytics, marketing) {
     const before = consent;
@@ -165,6 +165,8 @@
     applyConsent(consent);
     saveAttr(readAttr());
     document.getElementById('cb').classList.remove('is-in');
+    if (window.ZeroUI) window.ZeroUI.setBottom(0);
+    window.dispatchEvent(new CustomEvent('zero:consent', { detail: consent })); // pop-ups waiting for the choice can show now
     if (analytics) loadTrackers();
     // switching analytics off after it was on: the scripts are already running, so reload to stop them
     if (before && before.analytics && !analytics && loaded) location.reload();

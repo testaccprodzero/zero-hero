@@ -1038,5 +1038,9 @@
   "ASSISTANT REF": {
     "de": "LINIENRICHTER",
     "bs": "POMOĆNI SUDIJA"
+  },
+  "Add Date to My Kit": {
+    "de": "Termin zu meinem Kit",
+    "bs": "Dodaj datum u moj komplet"
   }
 }

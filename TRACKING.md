@@ -45,11 +45,12 @@ Every event carries `page_type` (home / configurator / inspiration / size_guide 
 ### Key events (mark in GA4)
 | Event | Fires when | Parameters |
 |---|---|---|
-| `generate_lead` | Quote form sent successfully | `form_id`, `lead_type` (kit / custom_design / general), `sport`, `team_size`, `needed_by`, `kit_parts_filled` (0–3), `value`, `currency`, `lead_mode` |
+| `generate_lead` | Quote form sent successfully | `form_id`, `lead_type` (kit / custom_design / factory_visit / size_set / general), `intent`, `sport`, `team_size`, `needed_by`, `kit_parts_filled` (0–3), `value`, `currency`, `lead_mode` |
 | `click_whatsapp` | Any WhatsApp link | `link_location` (contact / menu / footer / …) |
 | `click_to_call` | Any `tel:` link | `link_location` |
 | `click_email` | Any `mailto:` link | `link_location` |
 | `file_download` | Size-guide CSV (and any future download) | `file_name`, `file_type` |
+| `save_kit` | Exit-intent "keep your kit" email sent (Sheet logs a **Saved kit** row) | `kit_parts_filled` |
 
 ### Journey events (the funnel)
 | Event | Fires when | Parameters |
@@ -58,7 +59,7 @@ Every event carries `page_type` (home / configurator / inspiration / size_guide 
 | `view_item` | A partner kit (kit line) or a gallery idea is opened | `item_list_name` (kit_line / inspiration), `items[]` (name, sport, cut) |
 | `configurator_start` | First option picked on the products page · first colour change in the gallery · first use of the size planner | `configurator_type` (options / colour / sizes) |
 | `configurator_complete` | A recoloured gallery idea is saved | `configurator_type` |
-| `add_to_quote` | A part is added to **My Kit** (design / options / sizes) | `kit_part`, `item_name`, `kit_parts_filled` |
+| `add_to_quote` | A part is added to **My Kit** (design / options / sizes / timing) | `kit_part`, `item_name`, `kit_parts_filled` |
 | `add_to_wishlist` | Heart on a gallery idea | `item_list_name` |
 | `quote_form_start` | First field of the quote form touched (once) | `form_id`, `kit_parts_filled` |
 | `form_error` | Required fields missing, or the send failed | `form_id`, `field_name`, `error_type` (required / server) |
@@ -66,6 +67,11 @@ Every event carries `page_type` (home / configurator / inspiration / size_guide 
 | `custom_nudge_view` | The "Want something one-of-a-kind?" panel appears | — |
 | `surprise_me` | Gallery "Surprise me" | — |
 | `site_language_change` | EN / DE / BS switch | `language` |
+| `form_prefilled` | Quote form opens with answers taken from My Kit (once per page) | `kit_parts_filled` |
+| `share_kit` | "Share with your board" in My Kit | `kit_parts_filled` |
+| `shared_kit_open` | Someone opens a shared kit link | `kit_parts_filled` |
+| `season_banner_click` | Season order-by banner button | — |
+| `exit_intent_view` | Exit-intent "keep your kit" panel shown (desktop) | `kit_parts_filled` |
 
 Automatic from GA4 (no work): `page_view`, `session_start`, `first_visit`, `user_engagement`, `scroll`, outbound clicks.
 

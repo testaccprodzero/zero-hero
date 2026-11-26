@@ -9,6 +9,9 @@
       if(/github\.io$/.test(location.hostname)&&parts[1]) root='/'+parts[1]+'/';
       var rest=location.pathname.slice(root.length), m=rest.match(/^(de|bs)\//);
       if(m&&document.documentElement.lang!==m[1]){location.replace(root+m[1]+'/404.html');return;}
+      // relative links (menu, My Kit, scripts) resolve from the site root / language folder, whatever the missing URL was
+      var lang=document.documentElement.lang, base=document.createElement('base');
+      base.href=root+(lang==='de'||lang==='bs'?lang+'/':''); document.head.appendChild(base);
       if(root==='/')return;
       document.addEventListener('DOMContentLoaded',function(){
         document.querySelectorAll('[href^="/"],[src^="/"]').forEach(function(el){
@@ -118,7 +121,7 @@
       <p class="lead">This page was past the last defender when the ball was played. The flag is up — but the game goes on.</p>
       <div class="ctas">
         <a class="btn btn--primary" href="/index.html">Back to the Pitch <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10h13M11 4.5 16.5 10 11 15.5"/></svg></a>
-        <a class="btn btn--ghost" href="/index.html#contact">Get a Team Quote</a>
+        <a class="btn btn--ghost" href="/index.html#contact">Get a Free Mockup</a>
       </div>
       <p class="links">Or try: <a href="/products.html">Customisation options</a><a href="/size-guide.html">Size guide</a><a href="/about.html">About ZERO</a><a href="/index.html#faq">FAQ</a></p>
     </div>
@@ -172,5 +175,6 @@
       </svg>
     </div>
   </main>
+  <script src="assets/site.js"></script>
 </body>
 </html>

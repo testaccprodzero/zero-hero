@@ -8,10 +8,11 @@
      5. Deploy → New deployment → type "Web app" → Execute as: Me · Who has access: Anyone → Deploy.
      6. Copy the Web app URL (ends in /exec) → site.js → SITE.lead.sheetUrl, and mode: 'sheet'.
    After editing this script: Deploy → Manage deployments → ✏️ → Version: New version → Deploy (the URL stays the same).
+   After a change to COLUMNS / STATUSES: run "setup" once more (it rewrites the header row and the status dropdown).
    ═══════════════════════════════════════════════════════════ */
 
 const SETTINGS = {
-  salesEmail: 'you@example.com',          // who gets the alert for every new request (comma-separate several)
+  salesEmail: 'you@example.com',     // who gets the alert for every new request (comma-separate several)
   fromName: 'ZERO Teamwear',
   sendConfirmation: true,                 // email the buyer a branded "we got your request" email in their language
   logoFolderName: 'ZERO — Club logos',    // Drive folder for uploaded crests (created automatically)
@@ -29,8 +30,9 @@ const COLUMNS = [
   ['lead_type', 'Lead type'], ['language', 'Language'], ['logo', 'Logo'],
   ['source', 'Source (last)'], ['first_source', 'Source (first)'], ['landing_page', 'Landing page'], ['page', 'Sent from'],
   ['gclid', 'gclid'], ['fbclid', 'fbclid'], ['msclkid', 'msclkid'], ['ga_client_id', 'GA client ID'], ['notes', 'Notes'],
+  ['intent', 'Intent'], ['share_url', 'Kit link'],   // added later — kept at the end so older rows stay aligned
 ];
-const STATUSES = ['New', 'Contacted', 'Mockup sent', 'Quote sent', 'Won', 'Lost', 'Spam'];
+const STATUSES = ['New', 'Saved kit', 'Contacted', 'Mockup sent', 'Quote sent', 'Won', 'Lost', 'Spam'];
 
 /** Run once: creates the sheet, headers, status dropdown and the logo folder. */
 function setup() {
@@ -53,8 +55,10 @@ function doPost(e) {
 
   const lock = LockService.getScriptLock(); lock.waitLock(20000);
   try {
+    const saved = p.lead_type === 'saved_kit'; // exit-intent "save your kit": email only, no quote yet
     const d = Object.assign({}, p, {
-      received: new Date(), status: 'New',
+      received: new Date(), status: saved ? 'Saved kit' : 'New',
+      share_url: kitLink_(p.share_url),
       source: [p.utm_source, p.utm_medium, p.utm_campaign].filter(String).join(' / ') || '(direct)',
       logo: saveLogo_(p),
     });
@@ -109,6 +113,12 @@ function clean_(v) {
   const s = String(v == null ? '' : v).slice(0, 45000);
   return /^[=+\-@]/.test(s) ? "'" + s : s;
 }
+// only links back to our own site (or a local test copy) go into emails
+function kitLink_(u) {
+  u = String(u || '');
+  const own = SETTINGS.siteUrl.replace(/\/+$/, '');
+  return (u.indexOf(own) === 0 || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?\//.test(u)) ? u : '';
+}
 function json_(o) { return ContentService.createTextOutput(JSON.stringify(o)).setMimeType(ContentService.MimeType.JSON); }
 function esc_(s) { return String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
 
@@ -117,13 +127,14 @@ function alert_(d) {
   const wa = d.phone ? `https://wa.me/${String(d.phone).replace(/\D/g, '')}` : '';
   const row = (k, v) => v ? `<tr><td style="padding:4px 12px 4px 0;color:#777">${k}</td><td style="padding:4px 0"><b>${esc_(v)}</b></td></tr>` : '';
   const html = `<div style="font-family:Arial,sans-serif;font-size:14px">
-    <h2 style="margin:0 0 10px">New quote request — ${esc_(d.club)}</h2>
+    <h2 style="margin:0 0 10px">${d.lead_type === 'saved_kit' ? 'Kit saved by email (no quote yet)' : 'New quote request'} — ${esc_(d.club)}</h2>
     <table>${row('Name', d.name)}${row('Email', d.email)}${row('Phone', d.phone)}${row('Sport', d.sport)}${row('Players', d.team_size)}${row('Needed by', d.needed_by)}${row('Language', d.language)}${row('Source', d.source)}</table>
     ${d.message ? `<p style="white-space:pre-wrap;border-left:3px solid #e1141f;padding-left:10px">${esc_(d.message)}</p>` : ''}
     ${d.kit_summary ? `<p style="white-space:pre-wrap;background:#f4f4f4;padding:10px"><b>My Kit</b><br>${esc_(d.kit_summary)}</p>` : ''}
+    ${d.share_url ? `<p><a href="${esc_(d.share_url)}">Open their kit on the site</a></p>` : ''}
     ${d.logo && /^https?:/.test(d.logo) ? `<p><a href="${d.logo}">Open the uploaded logo</a></p>` : ''}
     <p><a href="mailto:${esc_(d.email)}">Reply by email</a>${wa ? ` · <a href="${wa}">Reply on WhatsApp</a>` : ''} · <a href="${sheetUrl}">Open the requests sheet</a></p></div>`;
-  MailApp.sendEmail({ to: SETTINGS.salesEmail, subject: `New quote request — ${d.club} (${d.sport || 'kit'})`, htmlBody: html, replyTo: d.email, name: SETTINGS.fromName });
+  MailApp.sendEmail({ to: SETTINGS.salesEmail, subject: d.lead_type === 'saved_kit' ? `Saved kit — ${d.email}` : `New quote request — ${d.club} (${d.sport || 'kit'})`, htmlBody: html, replyTo: d.email, name: SETTINGS.fromName });
 }
 
 // ── buyer confirmation: branded HTML (+ plain-text fallback), in the buyer's language ──
@@ -145,9 +156,24 @@ const MAIL_TEXT = {
     reply: 'Pošaljite grb i boje', wa: 'Pišite nam na WhatsApp', note: 'Samo odgovorite na ovaj e-mail da nešto dodate — grb, logotipe sponzora ili ideje za boje.', site: 'Posjetite našu stranicu', sign: 'Vaš ZERO Teamwear tim' },
 };
 
+// the "Your ZERO kit" email (exit-intent save): same layout, no steps, a button back to the kit
+const MAIL_SAVED = {
+  en: { subject: 'Your ZERO kit — pick up where you left off', pre: 'The kit you started, saved for later.', kicker: 'Kit saved', title: 'Your ZERO kit',
+    intro: 'Here’s the kit you started on our site. Open it any time to carry on, or forward this email to your board.', summary: 'Your kit',
+    resume: 'Continue my kit', note: 'Questions? Just reply to this email — a kit specialist answers within 1 working day.' },
+  de: { subject: 'Euer ZERO Kit — macht dort weiter, wo ihr aufgehört habt', pre: 'Euer begonnenes Kit, für später gespeichert.', kicker: 'Kit gespeichert', title: 'Euer ZERO Kit',
+    intro: 'Hier ist das Kit, das ihr auf unserer Website begonnen habt. Öffnet es jederzeit, um weiterzumachen, oder leitet diese E-Mail an euren Vorstand weiter.', summary: 'Euer Kit',
+    resume: 'Mein Kit fortsetzen', note: 'Fragen? Antwortet einfach auf diese E-Mail — ein Trikot-Experte meldet sich innerhalb eines Werktags.' },
+  bs: { subject: 'Vaš ZERO komplet — nastavite gdje ste stali', pre: 'Komplet koji ste započeli, sačuvan za kasnije.', kicker: 'Komplet sačuvan', title: 'Vaš ZERO komplet',
+    intro: 'Ovo je komplet koji ste započeli na našoj stranici. Otvorite ga bilo kada da nastavite ili proslijedite ovaj e-mail upravi kluba.', summary: 'Vaš komplet',
+    resume: 'Nastavi moj komplet', note: 'Pitanja? Samo odgovorite na ovaj e-mail — stručnjak za dresove javlja se u roku od 1 radnog dana.' },
+};
+
 /** Builds the confirmation email (pure function — also used for the preview). */
 function confirmEmail_(d) {
-  const t = MAIL_TEXT[d.language] || MAIL_TEXT.en;
+  const saved = d.lead_type === 'saved_kit';
+  const base = MAIL_TEXT[d.language] || MAIL_TEXT.en;
+  const t = saved ? Object.assign({}, base, MAIL_SAVED[d.language] || MAIL_SAVED.en, { steps: [] }) : base;
   const first = esc_(String(d.name || '').split(/\s+/)[0] || '');
   const fill = s => s.replace('{first}', first).replace('{club}', esc_(d.club));
   const red = '#e1141f', ink = '#0b0b0d';
@@ -202,12 +228,13 @@ function confirmEmail_(d) {
   <tr><td class="px" style="padding:10px 32px 8px">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f6;border-left:4px solid ${red}"><tr><td style="padding:18px 20px">
       <div style="${cond}font-size:15px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${ink};margin-bottom:6px">${t.summary}</div>
-      <table role="presentation" cellpadding="0" cellspacing="0">${row(t.club, d.club)}${row(t.sport, d.sport)}${row(t.players, d.team_size)}${row(t.when, d.needed_by)}</table>
+      <table role="presentation" cellpadding="0" cellspacing="0">${saved ? '' : row(t.club, d.club)}${row(t.sport, d.sport)}${row(t.players, d.team_size)}${row(t.when, d.needed_by)}</table>
       ${kitLines ? `<div style="${cond}font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#6b6b73;margin:12px 0 4px">${t.kit}</div>${kitLines}` : ''}
     </td></tr></table>
   </td></tr>
   <tr><td class="px" style="padding:22px 32px 4px">
-    ${btn(`mailto:${replyTo}?subject=${encodeURIComponent('Re: ' + (d.club || 'Kit request'))}`, t.reply, red, '#ffffff')}${waBtn}
+    ${saved ? (d.share_url ? btn(esc_(d.share_url), t.resume, red, '#ffffff') : btn(SETTINGS.siteUrl, t.site, red, '#ffffff'))
+      : btn(`mailto:${replyTo}?subject=${encodeURIComponent('Re: ' + (d.club || 'Kit request'))}`, t.reply, red, '#ffffff')}${waBtn}
     <p style="${font}margin:8px 0 0;font-size:13px;line-height:1.5;color:#6b6b73">${t.note}</p>
   </td></tr>
   <tr><td class="px" style="padding:22px 32px 30px"><p style="${font}margin:0;font-size:14px;color:#2b2b30">${t.sign}</p></td></tr>
@@ -220,7 +247,7 @@ function confirmEmail_(d) {
   const strip = s => s.replace(/<[^>]+>/g, '');
   const text = [strip(fill(t.title)), '', strip(fill(t.intro)), '',
     ...t.steps.map((st, i) => `${i + 1}. ${st[0]} — ${st[1]}`), '',
-    `${t.summary}: ${d.club || ''} · ${d.sport || ''} · ${d.team_size || ''} · ${d.needed_by || ''}`,
+    saved ? (d.share_url ? `${t.resume}: ${d.share_url}` : '') : `${t.summary}: ${d.club || ''} · ${d.sport || ''} · ${d.team_size || ''} · ${d.needed_by || ''}`,
     d.kit_summary ? `${t.kit}:\n${d.kit_summary}` : '', '', t.note, '', t.sign, SETTINGS.siteUrl].join('\n');
   return { subject: t.subject, html, text };
 }
@@ -235,4 +262,11 @@ function testConfirmation() {
   ['en', 'de', 'bs'].forEach(lang => confirm_({ language: lang, name: 'Kenan Test', club: 'FK Test Club', email: String(SETTINGS.salesEmail).split(',')[0].trim(),
     sport: 'Football', team_size: '20–50', needed_by: 'Within 1–2 months',
     kit_summary: 'Design: Inferno Checks [#c8102e / #141416 / #ffffff]\nOptions: Collar: V-Neck; Logo Application: Stitched Logo; Number Application: Flex Numbers\nSizes: Men M × 12, Men L × 8 — 20 pieces' }));
+}
+
+/** Optional: ▶ Run to email yourself the "Your ZERO kit" (saved kit) email in English. */
+function testSavedKit() {
+  confirm_({ lead_type: 'saved_kit', language: 'en', club: 'Inferno Checks', email: String(SETTINGS.salesEmail).split(',')[0].trim(),
+    share_url: SETTINGS.siteUrl + 'index.html#kit=demo',
+    kit_summary: 'Design: Inferno Checks\nOptions: Collar: V-Neck; Logo Application: Stitched Logo' });
 }

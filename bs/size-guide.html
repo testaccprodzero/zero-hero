@@ -268,7 +268,7 @@
       <li><a href="index.html#faq">FAQ</a></li>    </ul>
     <a class="nav__logo" href="index.html" aria-label="ZERO početna"><img src="../assets/zero-logo.png" alt="ZERO" /></a>
     <div class="nav__right">
-      <a class="btn btn--primary btn--sm" href="index.html#contact">Zatražite ponudu <svg class="arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10h13M11 4.5 16.5 10 11 15.5"/></svg></a>
+      <a class="btn btn--primary btn--sm" href="index.html#contact">Besplatna maketa <svg class="arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10h13M11 4.5 16.5 10 11 15.5"/></svg></a>
     </div>
   </nav>
 
@@ -491,7 +491,7 @@
               <button class="btn btn--ghost btn--sm" type="button" id="p-clear">Očisti</button>
               <button class="btn btn--ghost btn--sm" type="button" id="p-csv">Preuzmi CSV</button>
               <a class="btn btn--primary btn--sm" href="index.html#contact" id="p-send">
-                Pošalji uz upit
+                Dodaj veličine u moj komplet
                 <svg class="arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10h13M11 4.5 16.5 10 11 15.5"/></svg>
               </a>
             </div>
@@ -508,7 +508,7 @@
             <p class="help__title">Još niste sigurni? Probajte prije narudžbe.</p>
             <p class="help__sub">Šaljemo vašem klubu besplatan set veličina da svaki igrač proba svoju veličinu.</p>
           </div>
-          <a class="btn btn--light" href="index.html#contact">
+          <a class="btn btn--light" href="index.html?intent=sizeset#contact" data-intent="sizeset">
             Zatražite set veličina
             <svg class="arrow" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 10h13M11 4.5 16.5 10 11 15.5"/></svg>
           </a>
@@ -594,7 +594,8 @@
     const FIT_BIAS = { slim: -.28, regular: 0, relaxed: .45 };
 
     const state = { group: 'men', garment: 'top', fit: 'regular', unit: 'cm', a: 96, b: 178, rec: 2, pgroup: 'men' };
-    const counts = { men: {}, women: {}, youth: {} };
+    // the squad list is remembered, so "Change" in My Kit reopens the same list
+    const counts = (() => { try { const c = JSON.parse(localStorage.getItem('zeroPlanner') || 'null'); if (c && c.men && c.women && c.youth) return c; } catch (_) {} return { men: {}, women: {}, youth: {} }; })();
 
     const $ = s => document.querySelector(s);
     const $$ = s => [...document.querySelectorAll(s)];
@@ -763,6 +764,7 @@
 
     // ── PLANNER ──
     const toast = msg => { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2400); };
+    window.ZeroSizeList = () => sizeList(); // read by My Kit (../assets/kit.js)
     function renderCounts() {
       const g = CHART[state.pgroup], c = counts[state.pgroup];
       $('#counts').innerHTML = g.sizes.map(z => `
@@ -776,7 +778,9 @@
         </div>`).join('');
       updateTotal();
     }
-    function updateTotal() {
+    function updateTotal() { // runs after every change (+ / − / typing / presets)
+      try { localStorage.setItem('zeroPlanner', JSON.stringify(counts)); } catch (_) {}
+      window.dispatchEvent(new Event('zero:sizes')); // My Kit keeps an added size list up to date
       let n = 0; Object.values(counts).forEach(c => Object.values(c).forEach(v => n += v));
       $('#total').textContent = n;
     }
@@ -827,8 +831,6 @@
     $('#p-send').addEventListener('click', e => {
       const rows = sizeList();
       if (!rows.length) { e.preventDefault(); toast('Prvo dodajte nekoliko veličina'); return; }
-      const text = 'Lista veličina:\n' + rows.map(r => `${r[0]} ${r[1]} × ${r[2]}`).join('\n') + `\nTotal: ${rows.reduce((a, r) => a + r[2], 0)} pieces`;
-      try { localStorage.setItem('zeroSizeList', text); } catch (_) {}
     });
     $('#r-add').addEventListener('click', () => {
       const size = CHART[state.group].sizes[state.rec][0];
