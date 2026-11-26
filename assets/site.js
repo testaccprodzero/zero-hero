@@ -176,7 +176,7 @@
   document.querySelectorAll('.footer__bottom nav').forEach(n => n.insertAdjacentHTML('beforeend', `<button type="button" class="footer__cookies" data-consent-open>${t.cookies}</button>`));
 
   // ── tracking (consent banner, GA4, Clarity, events) and the quote-form sender ──
-  const trackJs = document.createElement('script'); trackJs.src = ASSETS + 'track.js?v=4'; document.body.appendChild(trackJs);
+  const trackJs = document.createElement('script'); trackJs.src = ASSETS + 'track.js?v=5'; document.body.appendChild(trackJs);
   if (document.getElementById('quote-form')) { const leadJs = document.createElement('script'); leadJs.src = ASSETS + 'lead.js?v=1'; document.body.appendChild(leadJs); }
 
   // ── My Kit: one shared draft order across design, options and sizes (assets/kit.js) ──

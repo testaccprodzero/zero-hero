@@ -51,8 +51,11 @@
   let loaded = false;
   const queue = []; // events before analytics consent — replayed once GA4 loads (same page only)
   function loadScript(src) { const s = document.createElement('script'); s.async = true; s.src = src; document.head.appendChild(s); }
+  // local previews (localhost, file://) never send data — keeps test sessions out of GA4 and Clarity; ?debug_track overrides
+  const LOCAL = location.protocol === 'file:' || /^(localhost|127\.0\.0\.1|\[::1\]|.*\.localhost)$/.test(location.hostname);
   function loadTrackers() {
     if (loaded || !consent || !consent.analytics) return;
+    if (LOCAL && !debug) { if (debug !== undefined) console.info('[track] local preview — GA4 / Clarity / GTM not loaded (add ?debug_track to test)'); return; }
     loaded = true;
     if (CFG.ga4) {
       loadScript(`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(CFG.ga4)}`);
