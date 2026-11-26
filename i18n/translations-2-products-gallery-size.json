@@ -1,0 +1,1378 @@
+{
+  "Customisation": {
+    "de": "Individualisierung",
+    "bs": "Prilagođavanje"
+  },
+  "Every Detail.": {
+    "de": "Jedes Detail.",
+    "bs": "Svaki detalj."
+  },
+  "Your Call.": {
+    "de": "Eure Wahl.",
+    "bs": "Vaš izbor."
+  },
+  "Collar, sleeves, cuffs, hem, panels, fit, branding and fabric — pick every detail of your kit, see it drawn live, and send the spec with your quote.": {
+    "de": "Kragen, Ärmel, Bündchen, Saum, Einsätze, Schnitt, Branding und Stoff — wählt jedes Detail eures Trikots, seht es live gezeichnet und schickt die Spezifikation mit eurer Anfrage.",
+    "bs": "Kragna, rukavi, manžete, porub, paneli, kroj, brendiranje i tkanina — odaberite svaki detalj dresa, gledajte ga uživo nacrtanog i pošaljite specifikaciju uz upit."
+  },
+  "Jersey anatomy with labelled parts": {
+    "de": "Trikot-Anatomie mit beschrifteten Teilen",
+    "bs": "Anatomija dresa s označenim dijelovima"
+  },
+  "Scale": {
+    "de": "Maßstab",
+    "bs": "Razmjera"
+  },
+  "Categories": {
+    "de": "Kategorien",
+    "bs": "Kategorije"
+  },
+  "Your spec sheet": {
+    "de": "Euer Datenblatt",
+    "bs": "Vaša specifikacija"
+  },
+  "Your Spec": {
+    "de": "Eure Spezifikation",
+    "bs": "Vaša specifikacija"
+  },
+  "Send Spec With My Quote": {
+    "de": "Mit Anfrage senden",
+    "bs": "Pošalji uz upit"
+  },
+  "Copy Spec Text": {
+    "de": "Spezifikation kopieren",
+    "bs": "Kopiraj specifikaciju"
+  },
+  "Reset to defaults": {
+    "de": "Auf Standard zurücksetzen",
+    "bs": "Vrati na zadano"
+  },
+  "Collar": {
+    "de": "Kragen",
+    "bs": "Kragna"
+  },
+  "Collars": {
+    "de": "Kragen",
+    "bs": "Kragne"
+  },
+  "The neckline sets the character of the whole kit — from timeless crew to a premium polo.": {
+    "de": "Der Ausschnitt prägt den Charakter des ganzen Trikots — vom zeitlosen Rundhals bis zum edlen Polo.",
+    "bs": "Izrez daje karakter cijelom dresu — od bezvremenskog okruglog izreza do premium polo kragne."
+  },
+  "Crew Neck": {
+    "de": "Rundhals",
+    "bs": "Okrugli izrez"
+  },
+  "Classic round rib collar. Clean and timeless.": {
+    "de": "Klassischer runder Rippkragen. Schlicht und zeitlos.",
+    "bs": "Klasična okrugla rebrasta kragna. Čisto i bezvremenski."
+  },
+  "Most popular": {
+    "de": "Beliebteste",
+    "bs": "Najpopularnije"
+  },
+  "V-Neck": {
+    "de": "V-Ausschnitt",
+    "bs": "V-izrez"
+  },
+  "Open V for extra airflow and a sharp look.": {
+    "de": "Offenes V für mehr Luft und einen markanten Look.",
+    "bs": "Otvoreni V za bolju prozračnost i oštar izgled."
+  },
+  "Crossover V": {
+    "de": "Überkreuz-V",
+    "bs": "Ukršteni V"
+  },
+  "Overlapping V-neck — the modern pro match-kit look.": {
+    "de": "Überlappender V-Ausschnitt — der moderne Profi-Look.",
+    "bs": "Preklopljeni V-izrez — moderan profesionalni izgled."
+  },
+  "Pro": {
+    "de": "Profi",
+    "bs": "Pro"
+  },
+  "Polo Collar": {
+    "de": "Polokragen",
+    "bs": "Polo kragna"
+  },
+  "Fold-down collar with button placket. Retro and premium.": {
+    "de": "Umlegekragen mit Knopfleiste. Retro und edel.",
+    "bs": "Preklopna kragna s lajsnom na dugmad. Retro i premium."
+  },
+  "Grandad Collar": {
+    "de": "Stehkragen",
+    "bs": "Stojeća kragna"
+  },
+  "Short stand-up collar with a two-button placket.": {
+    "de": "Kurzer Stehkragen mit Zwei-Knopf-Leiste.",
+    "bs": "Kratka stojeća kragna s dva dugmeta."
+  },
+  "Henley": {
+    "de": "Henley",
+    "bs": "Henley"
+  },
+  "Round neck with a three-button placket.": {
+    "de": "Rundhals mit Drei-Knopf-Leiste.",
+    "bs": "Okrugli izrez s tri dugmeta."
+  },
+  "Sleeve": {
+    "de": "Ärmel",
+    "bs": "Rukav"
+  },
+  "Sleeves": {
+    "de": "Ärmel",
+    "bs": "Rukavi"
+  },
+  "Sleeve cut decides how freely players move — and how the kit reads from the stands.": {
+    "de": "Der Ärmelschnitt entscheidet, wie frei sich die Spieler bewegen — und wie das Trikot von der Tribüne wirkt.",
+    "bs": "Kroj rukava određuje koliko se igrači slobodno kreću — i kako dres izgleda s tribina."
+  },
+  "Short Sleeve": {
+    "de": "Kurzarm",
+    "bs": "Kratki rukav"
+  },
+  "Set-in short sleeve. The football standard.": {
+    "de": "Eingesetzter Kurzarm. Der Fußball-Standard.",
+    "bs": "Ušiveni kratki rukav. Fudbalski standard."
+  },
+  "Raglan Sleeve": {
+    "de": "Raglanärmel",
+    "bs": "Raglan rukav"
+  },
+  "Diagonal seam from collar to underarm for full range of motion.": {
+    "de": "Diagonale Naht vom Kragen bis unter den Arm für volle Bewegungsfreiheit.",
+    "bs": "Dijagonalni šav od kragne do pazuha za punu slobodu pokreta."
+  },
+  "Long Sleeve": {
+    "de": "Langarm",
+    "bs": "Dugi rukav"
+  },
+  "For goalkeepers and cold-weather matches.": {
+    "de": "Für Torhüter und Spiele bei Kälte.",
+    "bs": "Za golmane i utakmice po hladnom vremenu."
+  },
+  "Cap Sleeve": {
+    "de": "Flügelärmel",
+    "bs": "Mini rukav"
+  },
+  "Barely-there sleeve. Volleyball and women's cuts.": {
+    "de": "Kaum sichtbarer Ärmel. Volleyball und Damenschnitte.",
+    "bs": "Jedva primjetan rukav. Odbojka i ženski krojevi."
+  },
+  "Sleeveless": {
+    "de": "Ärmellos",
+    "bs": "Bez rukava"
+  },
+  "Tank cut for basketball, volleyball and running.": {
+    "de": "Tanktop-Schnitt für Basketball, Volleyball und Laufen.",
+    "bs": "Kroj bez rukava za košarku, odbojku i trčanje."
+  },
+  "Cuff": {
+    "de": "Bündchen",
+    "bs": "Manžeta"
+  },
+  "Cuffs": {
+    "de": "Bündchen",
+    "bs": "Manžete"
+  },
+  "The finish at the end of the sleeve — small detail, big difference up close.": {
+    "de": "Der Abschluss am Ärmelende — kleines Detail, großer Unterschied aus der Nähe.",
+    "bs": "Završetak rukava — mali detalj, velika razlika izbliza."
+  },
+  "Plain Hem": {
+    "de": "Einfacher Saum",
+    "bs": "Običan porub"
+  },
+  "Single-stitched turned hem. Light and simple.": {
+    "de": "Einfach genähter Umschlagsaum. Leicht und schlicht.",
+    "bs": "Jednostruko prošiven porub. Lagano i jednostavno."
+  },
+  "Twin Stitch": {
+    "de": "Doppelnaht",
+    "bs": "Dvostruki šav"
+  },
+  "Double-needle hem for extra durability.": {
+    "de": "Doppelnadel-Saum für mehr Haltbarkeit.",
+    "bs": "Porub dvostrukom iglom za veću izdržljivost."
+  },
+  "Ribbed Cuff": {
+    "de": "Rippbündchen",
+    "bs": "Rebrasta manžeta"
+  },
+  "Knitted rib band that hugs the arm.": {
+    "de": "Gestricktes Rippband, das am Arm anliegt.",
+    "bs": "Pletena rebrasta traka koja prijanja uz ruku."
+  },
+  "Popular": {
+    "de": "Beliebt",
+    "bs": "Popularno"
+  },
+  "Contrast Band": {
+    "de": "Kontrastband",
+    "bs": "Kontrastna traka"
+  },
+  "A band in your accent colour — the classic club detail.": {
+    "de": "Ein Band in eurer Akzentfarbe — das klassische Vereinsdetail.",
+    "bs": "Traka u vašoj akcentnoj boji — klasičan klupski detalj."
+  },
+  "Laser-Cut Edge": {
+    "de": "Laser-Kante",
+    "bs": "Laserski rezana ivica"
+  },
+  "Bonded raw edge, no stitching. Ultra light.": {
+    "de": "Verklebte offene Kante, ohne Naht. Ultraleicht.",
+    "bs": "Lijepljena sirova ivica, bez šava. Ultralagano."
+  },
+  "Hem": {
+    "de": "Saum",
+    "bs": "Porub"
+  },
+  "Hems": {
+    "de": "Säume",
+    "bs": "Porubi"
+  },
+  "How the jersey ends — tucked in for matches or loose for training.": {
+    "de": "Wie das Trikot endet — eingesteckt fürs Spiel oder locker fürs Training.",
+    "bs": "Kako dres završava — uvučen za utakmicu ili slobodan za trening."
+  },
+  "Straight Hem": {
+    "de": "Gerader Saum",
+    "bs": "Ravan porub"
+  },
+  "Even all round. Works tucked in or out.": {
+    "de": "Rundum gleich lang. Passt eingesteckt oder offen.",
+    "bs": "Ujednačen svuda. Ide uvučen ili pušten."
+  },
+  "Drop-Tail Hem": {
+    "de": "Verlängerter Rückensaum",
+    "bs": "Produženi porub"
+  },
+  "Curved hem that stays tucked in during play.": {
+    "de": "Gerundeter Saum, der beim Spiel in der Hose bleibt.",
+    "bs": "Zaobljen porub koji ostaje uvučen tokom igre."
+  },
+  "Side Splits": {
+    "de": "Seitenschlitze",
+    "bs": "Bočni prorezi"
+  },
+  "Small side vents for movement and a relaxed drape.": {
+    "de": "Kleine Seitenschlitze für Bewegung und lockeren Fall.",
+    "bs": "Mali bočni prorezi za pokret i opušten pad."
+  },
+  "Rib Waistband": {
+    "de": "Rippbund",
+    "bs": "Rebrasti pojas"
+  },
+  "Knitted band for training and leisure tops.": {
+    "de": "Gestrickter Bund für Trainings- und Freizeitshirts.",
+    "bs": "Pleteni pojas za majice za trening i slobodno vrijeme."
+  },
+  "Panels": {
+    "de": "Einsätze",
+    "bs": "Paneli"
+  },
+  "Panels & Seams": {
+    "de": "Einsätze & Nähte",
+    "bs": "Paneli i šavovi"
+  },
+  "Construction lines shape the fit — and give your design new edges to play with.": {
+    "de": "Schnittlinien formen die Passform — und geben eurem Design neue Kanten zum Spielen.",
+    "bs": "Konstrukcijske linije oblikuju kroj — i daju dizajnu nove ivice za igru."
+  },
+  "Classic Seams": {
+    "de": "Klassische Nähte",
+    "bs": "Klasični šavovi"
+  },
+  "Traditional construction with set-in sleeves.": {
+    "de": "Traditionelle Verarbeitung mit eingesetzten Ärmeln.",
+    "bs": "Tradicionalna izrada s ušivenim rukavima."
+  },
+  "Side Mesh Panels": {
+    "de": "Seitliche Mesh-Einsätze",
+    "bs": "Bočni mrežasti paneli"
+  },
+  "Breathable mesh inserts from underarm to hem.": {
+    "de": "Atmungsaktive Mesh-Einsätze von der Achsel bis zum Saum.",
+    "bs": "Prozračni mrežasti umeci od pazuha do poruba."
+  },
+  "Contour Panels": {
+    "de": "Kontur-Einsätze",
+    "bs": "Konturni paneli"
+  },
+  "Curved front panels for a sculpted athletic fit.": {
+    "de": "Geschwungene Vorderteile für eine athletisch geformte Passform.",
+    "bs": "Zakrivljeni prednji paneli za izvajan atletski kroj."
+  },
+  "Seamless Body": {
+    "de": "Nahtloser Körper",
+    "bs": "Bešavno tijelo"
+  },
+  "Minimal seams for a maximum print area.": {
+    "de": "Minimale Nähte für maximale Druckfläche.",
+    "bs": "Minimalni šavovi za maksimalnu površinu za print."
+  },
+  "Fit": {
+    "de": "Schnitt",
+    "bs": "Kroj"
+  },
+  "Same pattern, three silhouettes — choose per team, or mix within a squad.": {
+    "de": "Gleiches Muster, drei Silhouetten — wählt pro Team oder mischt innerhalb eines Kaders.",
+    "bs": "Isti uzorak, tri silhuete — birajte po timu ili kombinujte unutar ekipe."
+  },
+  "Slim Fit": {
+    "de": "Slim Fit",
+    "bs": "Uski kroj"
+  },
+  "Close to the body. Handball, volleyball, running.": {
+    "de": "Körpernah. Handball, Volleyball, Laufen.",
+    "bs": "Uz tijelo. Rukomet, odbojka, trčanje."
+  },
+  "Regular Fit": {
+    "de": "Regular Fit",
+    "bs": "Standardni kroj"
+  },
+  "Our classic athletic cut. Right for most squads.": {
+    "de": "Unser klassischer Sportschnitt. Richtig für die meisten Kader.",
+    "bs": "Naš klasični sportski kroj. Pravi izbor za većinu ekipa."
+  },
+  "Relaxed Fit": {
+    "de": "Relaxed Fit",
+    "bs": "Širi kroj"
+  },
+  "Roomier cut with more drape. Basketball and leisure.": {
+    "de": "Weiterer Schnitt mit mehr Fall. Basketball und Freizeit.",
+    "bs": "Širi kroj s više pada. Košarka i slobodno vrijeme."
+  },
+  "Branding": {
+    "de": "Branding",
+    "bs": "Brendiranje"
+  },
+  "Branding Positions": {
+    "de": "Branding-Positionen",
+    "bs": "Pozicije brendiranja"
+  },
+  "Everything is sublimated into the fabric — choose as many positions as you need.": {
+    "de": "Alles wird in den Stoff sublimiert — wählt so viele Positionen, wie ihr braucht.",
+    "bs": "Sve je sublimirano u tkaninu — odaberite koliko god pozicija trebate."
+  },
+  "Club Crest": {
+    "de": "Vereinswappen",
+    "bs": "Grb kluba"
+  },
+  "Left chest, over the heart.": {
+    "de": "Linke Brust, über dem Herzen.",
+    "bs": "Lijeva strana prsa, iznad srca."
+  },
+  "Brand Mark": {
+    "de": "Markenlogo",
+    "bs": "Znak brenda"
+  },
+  "Right chest, opposite the crest.": {
+    "de": "Rechte Brust, gegenüber dem Wappen.",
+    "bs": "Desna strana prsa, nasuprot grbu."
+  },
+  "Front Sponsor": {
+    "de": "Brustsponsor",
+    "bs": "Prednji sponzor"
+  },
+  "Main sponsor across the chest.": {
+    "de": "Hauptsponsor quer über die Brust.",
+    "bs": "Glavni sponzor preko prsa."
+  },
+  "Front Number": {
+    "de": "Brustnummer",
+    "bs": "Broj na prsima"
+  },
+  "Player number on the front.": {
+    "de": "Spielernummer auf der Vorderseite.",
+    "bs": "Broj igrača sprijeda."
+  },
+  "Sleeve Badge": {
+    "de": "Ärmelabzeichen",
+    "bs": "Oznaka na rukavu"
+  },
+  "League or sponsor patch on the sleeve.": {
+    "de": "Liga- oder Sponsoren-Patch am Ärmel.",
+    "bs": "Oznaka lige ili sponzora na rukavu."
+  },
+  "Hem Tag": {
+    "de": "Saum-Label",
+    "bs": "Etiketa na porubu"
+  },
+  "Small woven-look tag at the hem.": {
+    "de": "Kleines Label in Webetikett-Optik am Saum.",
+    "bs": "Mala etiketa tkanog izgleda na porubu."
+  },
+  "Fabric": {
+    "de": "Stoff",
+    "bs": "Tkanina"
+  },
+  "Fabrics": {
+    "de": "Stoffe",
+    "bs": "Tkanine"
+  },
+  "All fabrics take full-colour sublimation — pick by feel, weight and weather.": {
+    "de": "Alle Stoffe sind voll sublimierbar — wählt nach Griff, Gewicht und Wetter.",
+    "bs": "Sve tkanine podržavaju sublimaciju u punoj boji — birajte po osjećaju, težini i vremenu."
+  },
+  "Smooth surface for the brightest prints.": {
+    "de": "Glatte Oberfläche für die leuchtendsten Drucke.",
+    "bs": "Glatka površina za najsvjetlije printeve."
+  },
+  "Open-knit mesh for maximum airflow.": {
+    "de": "Offenmaschiges Mesh für maximale Luftzirkulation.",
+    "bs": "Otvorena mrežasta tkanina za maksimalnu prozračnost."
+  },
+  "Textured knit with extra structure and grip.": {
+    "de": "Strukturierter Strick mit mehr Halt und Griff.",
+    "bs": "Teksturirani štrik s više strukture i prianjanja."
+  },
+  "Stretchy rib for warm-ups and training tops.": {
+    "de": "Dehnbarer Rippstrick für Aufwärm- und Trainingsshirts.",
+    "bs": "Elastični rebrasti štrik za zagrijavanje i trening majice."
+  },
+  "Eco Interlock": {
+    "de": "Eco Interlock",
+    "bs": "Eko interlock"
+  },
+  "100% recycled polyester, same performance.": {
+    "de": "100 % recyceltes Polyester, gleiche Leistung.",
+    "bs": "100 % reciklirani poliester, iste performanse."
+  },
+  "Eco": {
+    "de": "Öko",
+    "bs": "Eko"
+  },
+  "SEAMLESS PRINT AREA": {
+    "de": "NAHTLOSE DRUCKFLÄCHE",
+    "bs": "BEŠAVNA POVRŠINA ZA PRINT"
+  },
+  "SPONSOR": {
+    "de": "SPONSOR",
+    "bs": "SPONZOR"
+  },
+  "SLIM": {
+    "de": "SCHMAL",
+    "bs": "USKI"
+  },
+  "REGULAR": {
+    "de": "NORMAL",
+    "bs": "STANDARDNI"
+  },
+  "RELAXED": {
+    "de": "WEIT",
+    "bs": "ŠIRI"
+  },
+  "· ½ CHEST": {
+    "de": "· ½ BRUST",
+    "bs": "· ½ GRUDI"
+  },
+  "Choose any": {
+    "de": "Beliebig viele",
+    "bs": "Bilo koliko"
+  },
+  "Choose one": {
+    "de": "Eine Auswahl",
+    "bs": "Jedan izbor"
+  },
+  "options": {
+    "de": "Optionen",
+    "bs": "opcija"
+  },
+  "Breathable": {
+    "de": "Atmungsaktiv",
+    "bs": "Prozračnost"
+  },
+  "Durable": {
+    "de": "Robust",
+    "bs": "Izdržljivost"
+  },
+  "Stretch": {
+    "de": "Dehnbar",
+    "bs": "Elastičnost"
+  },
+  "Sleeveless cut selected — cuffs don't apply. Armholes get a matching bound edge.": {
+    "de": "Ärmelloser Schnitt gewählt — Bündchen entfallen. Die Armausschnitte bekommen eine passende Einfassung.",
+    "bs": "Odabran je kroj bez rukava — manžete se ne primjenjuju. Otvori za ruke dobijaju odgovarajući obrub."
+  },
+  "None": {
+    "de": "Keine",
+    "bs": "Nijedna"
+  },
+  "Bound armholes": {
+    "de": "Eingefasste Armausschnitte",
+    "bs": "Obrubljeni otvori za ruke"
+  },
+  "CHOICES": {
+    "de": "OPTIONEN",
+    "bs": "IZBORA"
+  },
+  "Preview ·": {
+    "de": "Vorschau ·",
+    "bs": "Pregled ·"
+  },
+  "Kit spec:\\n": {
+    "de": "Trikot-Spezifikation:\\n",
+    "bs": "Specifikacija dresa:\\n"
+  },
+  "Spec copied to clipboard": {
+    "de": "Spezifikation kopiert",
+    "bs": "Specifikacija kopirana"
+  },
+  "Copy not available here": {
+    "de": "Kopieren hier nicht möglich",
+    "bs": "Kopiranje ovdje nije moguće"
+  },
+  "Back to defaults": {
+    "de": "Auf Standard zurückgesetzt",
+    "bs": "Vraćeno na zadano"
+  },
+  "COLLAR": {
+    "de": "KRAGEN",
+    "bs": "KRAGNA"
+  },
+  "BRANDING": {
+    "de": "BRANDING",
+    "bs": "BRENDIRANJE"
+  },
+  "PANELS": {
+    "de": "EINSÄTZE",
+    "bs": "PANELI"
+  },
+  "FIT": {
+    "de": "SCHNITT",
+    "bs": "KROJ"
+  },
+  "SLEEVE": {
+    "de": "ÄRMEL",
+    "bs": "RUKAV"
+  },
+  "CUFF": {
+    "de": "BÜNDCHEN",
+    "bs": "MANŽETA"
+  },
+  "HEM": {
+    "de": "SAUM",
+    "bs": "PORUB"
+  },
+  "Kit Inspiration": {
+    "de": "Trikot-Inspiration",
+    "bs": "Inspiracija za dres"
+  },
+  "Find Your": {
+    "de": "Findet euren",
+    "bs": "Pronađite svoj"
+  },
+  "Look": {
+    "de": "Look",
+    "bs": "stil"
+  },
+  "Browse kit ideas by sport, colour and pattern. Flip a card to see the back, save your favourites to a shortlist and send it with your quote — our designers take it from there.": {
+    "de": "Stöbert in Trikot-Ideen nach Sportart, Farbe und Muster. Dreht eine Karte für die Rückseite, speichert eure Favoriten auf einer Merkliste und schickt sie mit eurer Anfrage — unsere Designer machen den Rest.",
+    "bs": "Pregledajte ideje za dresove po sportu, boji i uzorku. Okrenite karticu da vidite leđa, sačuvajte omiljene na listu i pošaljite je uz upit — naši dizajneri preuzimaju dalje."
+  },
+  "Kit ideas": {
+    "de": "Trikot-Ideen",
+    "bs": "Ideja za dres"
+  },
+  "Surprise Me": {
+    "de": "Überrasch mich",
+    "bs": "Iznenadi me"
+  },
+  "Filter kit ideas": {
+    "de": "Trikot-Ideen filtern",
+    "bs": "Filtriraj ideje"
+  },
+  "Colour": {
+    "de": "Farbe",
+    "bs": "Boja"
+  },
+  "Pattern": {
+    "de": "Muster",
+    "bs": "Uzorak"
+  },
+  "Shortlist": {
+    "de": "Merkliste",
+    "bs": "Moja lista"
+  },
+  "Reset filters": {
+    "de": "Filter zurücksetzen",
+    "bs": "Poništi filtere"
+  },
+  "Every idea is a starting point — your designers can change colours, add your crest and sponsors, and adapt it to any sport.": {
+    "de": "Jede Idee ist ein Startpunkt — eure Designer können Farben ändern, Wappen und Sponsoren ergänzen und sie an jede Sportart anpassen.",
+    "bs": "Svaka ideja je polazna tačka — dizajneri mogu promijeniti boje, dodati grb i sponzore i prilagoditi je bilo kojem sportu."
+  },
+  "Start My Kit From This Idea": {
+    "de": "Mit dieser Idee starten",
+    "bs": "Počni od ove ideje"
+  },
+  "Previous idea": {
+    "de": "Vorherige Idee",
+    "bs": "Prethodna ideja"
+  },
+  "Next idea": {
+    "de": "Nächste Idee",
+    "bs": "Sljedeća ideja"
+  },
+  "Your shortlist": {
+    "de": "Eure Merkliste",
+    "bs": "Vaša lista"
+  },
+  "Your Shortlist": {
+    "de": "Eure Merkliste",
+    "bs": "Vaša lista"
+  },
+  "Close shortlist": {
+    "de": "Merkliste schließen",
+    "bs": "Zatvori listu"
+  },
+  "Send Shortlist With My Quote": {
+    "de": "Merkliste mit Anfrage senden",
+    "bs": "Pošalji listu uz upit"
+  },
+  "Clear Shortlist": {
+    "de": "Merkliste leeren",
+    "bs": "Isprazni listu"
+  },
+  "Red": {
+    "de": "Rot",
+    "bs": "Crvena"
+  },
+  "Blue": {
+    "de": "Blau",
+    "bs": "Plava"
+  },
+  "Green": {
+    "de": "Grün",
+    "bs": "Zelena"
+  },
+  "Black": {
+    "de": "Schwarz",
+    "bs": "Crna"
+  },
+  "White": {
+    "de": "Weiß",
+    "bs": "Bijela"
+  },
+  "Gold": {
+    "de": "Gold",
+    "bs": "Zlatna"
+  },
+  "Teal": {
+    "de": "Petrol",
+    "bs": "Tirkizna"
+  },
+  "Purple": {
+    "de": "Lila",
+    "bs": "Ljubičasta"
+  },
+  "Orange": {
+    "de": "Orange",
+    "bs": "Narandžasta"
+  },
+  "Stripes": {
+    "de": "Streifen",
+    "bs": "Pruge"
+  },
+  "Pinstripes": {
+    "de": "Nadelstreifen",
+    "bs": "Tanke pruge"
+  },
+  "Hoops": {
+    "de": "Ringel",
+    "bs": "Vodoravne pruge"
+  },
+  "Sash": {
+    "de": "Schärpe",
+    "bs": "Lenta"
+  },
+  "Halves": {
+    "de": "Hälften",
+    "bs": "Polovine"
+  },
+  "Diagonal Split": {
+    "de": "Diagonal geteilt",
+    "bs": "Dijagonalna podjela"
+  },
+  "Chevron": {
+    "de": "Chevron",
+    "bs": "Ševron"
+  },
+  "Fade": {
+    "de": "Verlauf",
+    "bs": "Prelaz"
+  },
+  "Slashes": {
+    "de": "Schrägstriche",
+    "bs": "Kose linije"
+  },
+  "New": {
+    "de": "Neu",
+    "bs": "Novo"
+  },
+  "All": {
+    "de": "Alle",
+    "bs": "Svi"
+  },
+  "All patterns": {
+    "de": "Alle Muster",
+    "bs": "Svi uzorci"
+  },
+  "Showing": {
+    "de": "Zeige",
+    "bs": "Prikazano"
+  },
+  "of": {
+    "de": "von",
+    "bs": "od"
+  },
+  "kit ideas": {
+    "de": "Trikot-Ideen",
+    "bs": "ideja za dres"
+  },
+  "No kits match": {
+    "de": "Keine Treffer",
+    "bs": "Nema rezultata"
+  },
+  "Try another colour or pattern — or let us surprise you.": {
+    "de": "Probiert eine andere Farbe oder ein anderes Muster — oder lasst euch überraschen.",
+    "bs": "Probajte drugu boju ili uzorak — ili se prepustite iznenađenju."
+  },
+  "Saved “": {
+    "de": "„",
+    "bs": "„"
+  },
+  "” to your shortlist": {
+    "de": "“ auf eurer Merkliste gespeichert",
+    "bs": "“ sačuvano na vašoj listi"
+  },
+  "Removed from your shortlist": {
+    "de": "Von der Merkliste entfernt",
+    "bs": "Uklonjeno s liste"
+  },
+  "No favourites yet.": {
+    "de": "Noch keine Favoriten.",
+    "bs": "Još nema omiljenih."
+  },
+  "Tap the heart on any kit idea to save it here.": {
+    "de": "Tippt auf das Herz einer Trikot-Idee, um sie hier zu speichern.",
+    "bs": "Dodirnite srce na bilo kojoj ideji da je sačuvate ovdje."
+  },
+  "Save some kit ideas first": {
+    "de": "Speichert zuerst ein paar Trikot-Ideen",
+    "bs": "Prvo sačuvajte nekoliko ideja"
+  },
+  "Kit ideas I like:\\n": {
+    "de": "Trikot-Ideen, die uns gefallen:\\n",
+    "bs": "Ideje za dres koje nam se sviđaju:\\n"
+  },
+  "Saved To Shortlist": {
+    "de": "Auf der Merkliste",
+    "bs": "Sačuvano na listi"
+  },
+  "Save To Shortlist": {
+    "de": "Auf die Merkliste",
+    "bs": "Sačuvaj na listu"
+  },
+  "Front": {
+    "de": "Vorne",
+    "bs": "Prednja strana"
+  },
+  "Back": {
+    "de": "Hinten",
+    "bs": "Leđa"
+  },
+  "Short sleeve": {
+    "de": "Kurzarm",
+    "bs": "Kratki rukav"
+  },
+  "Colour family": {
+    "de": "Farbfamilie",
+    "bs": "Porodica boja"
+  },
+  "Colours": {
+    "de": "Farben",
+    "bs": "Boje"
+  },
+  "Starting point for our kit:\\n•": {
+    "de": "Ausgangspunkt für unser Trikot:\\n•",
+    "bs": "Polazna tačka za naš dres:\\n•"
+  },
+  "Fresh idea": {
+    "de": "Neue Idee",
+    "bs": "Svježa ideja"
+  },
+  "Perfect Fit": {
+    "de": "perfekten Sitz",
+    "bs": "savršen kroj"
+  },
+  "Move the sliders and get your size in seconds — then plan sizes for your whole squad. All sizes run from youth 116 to adult 5XL, with women's cuts for every sport.": {
+    "de": "Schiebt die Regler und bekommt eure Größe in Sekunden — dann plant die Größen für euren ganzen Kader. Alle Größen von Kinder 116 bis Erwachsene 5XL, mit Damenschnitten für jede Sportart.",
+    "bs": "Pomjerite klizače i dobijte veličinu za nekoliko sekundi — zatim isplanirajte veličine za cijelu ekipu. Sve veličine od dječije 116 do odrasle 5XL, sa ženskim krojevima za svaki sport."
+  },
+  "Free size set before you order": {
+    "de": "Kostenloses Größenset vor der Bestellung",
+    "bs": "Besplatan set veličina prije narudžbe"
+  },
+  "Youth 116 – Adult 5XL": {
+    "de": "Kinder 116 – Erwachsene 5XL",
+    "bs": "Dječije 116 – odrasli 5XL"
+  },
+  "Women's cuts available": {
+    "de": "Damenschnitte verfügbar",
+    "bs": "Dostupni ženski krojevi"
+  },
+  "Size finder": {
+    "de": "Größenfinder",
+    "bs": "Pronalazač veličine"
+  },
+  "Who is it for?": {
+    "de": "Für wen?",
+    "bs": "Za koga?"
+  },
+  "Men": {
+    "de": "Herren",
+    "bs": "Muškarci"
+  },
+  "Women": {
+    "de": "Damen",
+    "bs": "Žene"
+  },
+  "Youth": {
+    "de": "Jugend",
+    "bs": "Djeca"
+  },
+  "Garment": {
+    "de": "Kleidungsstück",
+    "bs": "Odjevni predmet"
+  },
+  "Jersey / Top": {
+    "de": "Trikot / Shirt",
+    "bs": "Dres / majica"
+  },
+  "Shorts / Pants": {
+    "de": "Shorts / Hose",
+    "bs": "Šorc / hlače"
+  },
+  "How do you like it to fit?": {
+    "de": "Wie soll es sitzen?",
+    "bs": "Kako želite da stoji?"
+  },
+  "Slim": {
+    "de": "Eng",
+    "bs": "Usko"
+  },
+  "Regular": {
+    "de": "Normal",
+    "bs": "Standardno"
+  },
+  "Relaxed": {
+    "de": "Locker",
+    "bs": "Široko"
+  },
+  "Chest": {
+    "de": "Brust",
+    "bs": "Grudi"
+  },
+  "Height": {
+    "de": "Körpergröße",
+    "bs": "Visina"
+  },
+  "Units": {
+    "de": "Einheit",
+    "bs": "Jedinice"
+  },
+  "inch": {
+    "de": "Zoll",
+    "bs": "inč"
+  },
+  "The highlighted line is what you're measuring": {
+    "de": "Die markierte Linie zeigt, was ihr messt",
+    "bs": "Označena linija pokazuje šta mjerite"
+  },
+  "Your recommended size": {
+    "de": "Eure empfohlene Größe",
+    "bs": "Vaša preporučena veličina"
+  },
+  "Smaller": {
+    "de": "Kleiner",
+    "bs": "Manje"
+  },
+  "Your measurements": {
+    "de": "Eure Maße",
+    "bs": "Vaše mjere"
+  },
+  "Larger": {
+    "de": "Größer",
+    "bs": "Veće"
+  },
+  "Add to Team Planner": {
+    "de": "Zum Teamplaner",
+    "bs": "Dodaj u planer tima"
+  },
+  "See Full Chart": {
+    "de": "Ganze Tabelle",
+    "bs": "Cijela tabela"
+  },
+  "Size Charts": {
+    "de": "Größentabellen",
+    "bs": "Tabele veličina"
+  },
+  "Body": {
+    "de": "Körper-",
+    "bs": "Tjelesne"
+  },
+  "Measurements": {
+    "de": "maße",
+    "bs": "mjere"
+  },
+  "Measurements are of the body, not the garment. Hover a column to see where it's measured. Your recommended size is highlighted.": {
+    "de": "Die Maße beziehen sich auf den Körper, nicht auf das Kleidungsstück. Fahrt über eine Spalte, um zu sehen, wo gemessen wird. Eure empfohlene Größe ist markiert.",
+    "bs": "Mjere se odnose na tijelo, ne na odjeću. Pređite preko kolone da vidite gdje se mjeri. Vaša preporučena veličina je označena."
+  },
+  "Hover a column in the chart to see where it's measured.": {
+    "de": "Fahrt über eine Spalte der Tabelle, um zu sehen, wo gemessen wird.",
+    "bs": "Pređite preko kolone u tabeli da vidite gdje se mjeri."
+  },
+  "How To Measure": {
+    "de": "Richtig messen",
+    "bs": "Kako mjeriti"
+  },
+  "Four Measurements,": {
+    "de": "Vier Maße,",
+    "bs": "Četiri mjere,"
+  },
+  "Two Minutes": {
+    "de": "zwei Minuten",
+    "bs": "dvije minute"
+  },
+  "Measure around the fullest part of the chest, just under the armpits, keeping the tape level.": {
+    "de": "Messt um die breiteste Stelle der Brust, direkt unter den Achseln, mit waagerechtem Maßband.",
+    "bs": "Mjerite oko najšireg dijela grudi, odmah ispod pazuha, držeći metar vodoravno."
+  },
+  "Waist": {
+    "de": "Taille",
+    "bs": "Struk"
+  },
+  "Measure around your natural waistline — the narrowest point, just above the belly button.": {
+    "de": "Messt um die natürliche Taille — die schmalste Stelle, knapp über dem Bauchnabel.",
+    "bs": "Mjerite oko prirodnog struka — najužeg dijela, odmah iznad pupka."
+  },
+  "Hips": {
+    "de": "Hüfte",
+    "bs": "Kukovi"
+  },
+  "Stand with feet together and measure around the widest part of the hips and seat.": {
+    "de": "Stellt die Füße zusammen und messt um die breiteste Stelle von Hüfte und Gesäß.",
+    "bs": "Stanite sastavljenih stopala i mjerite oko najšireg dijela kukova i zadnjice."
+  },
+  "Stand barefoot against a wall, heels together, and measure from the floor to the top of the head.": {
+    "de": "Stellt euch barfuß an eine Wand, Fersen zusammen, und messt vom Boden bis zum Scheitel.",
+    "bs": "Stanite bosi uz zid, peta uz petu, i mjerite od poda do tjemena."
+  },
+  "Measure over light clothing": {
+    "de": "Über leichter Kleidung messen",
+    "bs": "Mjerite preko lagane odjeće"
+  },
+  "Keep the tape snug, not tight": {
+    "de": "Maßband anliegend, nicht straff",
+    "bs": "Metar priljubljen, ne zategnut"
+  },
+  "Between sizes? Size up for a relaxed fit": {
+    "de": "Zwischen zwei Größen? Für lockeren Sitz eine größer",
+    "bs": "Između dvije veličine? Za širi kroj uzmite veću"
+  },
+  "Close to the body so opponents can't grab it and nothing flaps in the wind. Stretch fabric moves with every jump.": {
+    "de": "Körpernah, damit Gegner nichts zu greifen haben und nichts im Wind flattert. Stretch-Stoff geht jeden Sprung mit.",
+    "bs": "Uz tijelo, da protivnik nema za šta uhvatiti i da ništa ne leprša na vjetru. Elastična tkanina prati svaki skok."
+  },
+  "Handball · Volleyball · Running": {
+    "de": "Handball · Volleyball · Laufen",
+    "bs": "Rukomet · odbojka · trčanje"
+  },
+  "Our classic athletic cut — room to move without the bulk. The right choice for most squads.": {
+    "de": "Unser klassischer Sportschnitt — Bewegungsfreiheit ohne Überschuss. Die richtige Wahl für die meisten Kader.",
+    "bs": "Naš klasični sportski kroj — prostor za pokret bez viška. Pravi izbor za većinu ekipa."
+  },
+  "Football · Training wear": {
+    "de": "Fußball · Trainingskleidung",
+    "bs": "Fudbal · odjeća za trening"
+  },
+  "Wide armholes and a longer drop for full range of motion — the traditional court cut.": {
+    "de": "Weite Armausschnitte und mehr Länge für volle Bewegungsfreiheit — der klassische Court-Schnitt.",
+    "bs": "Široki otvori za ruke i duži pad za punu slobodu pokreta — tradicionalni kroj za teren."
+  },
+  "Basketball · Leisurewear": {
+    "de": "Basketball · Freizeitkleidung",
+    "bs": "Košarka · odjeća za slobodno vrijeme"
+  },
+  "For Club Managers": {
+    "de": "Für Vereinsverantwortliche",
+    "bs": "Za menadžere klubova"
+  },
+  "Team Size": {
+    "de": "Team-Größen",
+    "bs": "Planer veličina"
+  },
+  "Planner": {
+    "de": "planer",
+    "bs": "za tim"
+  },
+  "Build your squad's size list here, then send it with your quote request — or download it to share with your team.": {
+    "de": "Erstellt hier die Größenliste eures Kaders und schickt sie mit eurer Anfrage — oder ladet sie herunter, um sie mit dem Team zu teilen.",
+    "bs": "Napravite ovdje listu veličina ekipe i pošaljite je uz upit — ili je preuzmite i podijelite s timom."
+  },
+  "Don't know yet? Typical split for": {
+    "de": "Noch unklar? Typische Verteilung für",
+    "bs": "Još ne znate? Tipična raspodjela za"
+  },
+  "players": {
+    "de": "Spieler",
+    "bs": "igrača"
+  },
+  "Fill In": {
+    "de": "Eintragen",
+    "bs": "Popuni"
+  },
+  "Total pieces": {
+    "de": "Teile gesamt",
+    "bs": "Ukupno komada"
+  },
+  "Clear": {
+    "de": "Leeren",
+    "bs": "Očisti"
+  },
+  "Download CSV": {
+    "de": "CSV herunterladen",
+    "bs": "Preuzmi CSV"
+  },
+  "Send With My Quote": {
+    "de": "Mit Anfrage senden",
+    "bs": "Pošalji uz upit"
+  },
+  "Still not sure? Try before you order.": {
+    "de": "Noch unsicher? Erst anprobieren, dann bestellen.",
+    "bs": "Još niste sigurni? Probajte prije narudžbe."
+  },
+  "We send a free size set to your club so every player can try on their size.": {
+    "de": "Wir schicken eurem Verein ein kostenloses Größenset, damit jeder Spieler seine Größe anprobieren kann.",
+    "bs": "Šaljemo vašem klubu besplatan set veličina da svaki igrač proba svoju veličinu."
+  },
+  "Request a Size Set": {
+    "de": "Größenset anfordern",
+    "bs": "Zatražite set veličina"
+  },
+  "Your measurements are below our smallest": {
+    "de": "Eure Maße liegen unter unserer kleinsten Größe für",
+    "bs": "Vaše mjere su ispod naše najmanje veličine za kategoriju"
+  },
+  "size.": {
+    "de": ".",
+    "bs": "."
+  },
+  "Have a look at the": {
+    "de": "Schaut euch die Größen für",
+    "bs": "Pogledajte veličine za kategoriju"
+  },
+  "sizes": {
+    "de": "an",
+    "bs": ""
+  },
+  "Talk to us about a custom size": {
+    "de": "Sprecht uns auf eine Sondergröße an",
+    "bs": "Razgovarajte s nama o veličini po mjeri"
+  },
+  "You're above our standard range — no problem. We produce": {
+    "de": "Ihr liegt über unserem Standardbereich — kein Problem. Wir fertigen",
+    "bs": "Iznad ste našeg standardnog raspona — nema problema. Izrađujemo"
+  },
+  "custom sizes": {
+    "de": "Sondergrößen",
+    "bs": "veličine po mjeri"
+  },
+  "on request at no extra cost.": {
+    "de": "auf Anfrage ohne Aufpreis.",
+    "bs": "na zahtjev bez doplate."
+  },
+  "You're right between": {
+    "de": "Ihr liegt genau zwischen",
+    "bs": "Tačno ste između"
+  },
+  "and": {
+    "de": "und",
+    "bs": "i"
+  },
+  ". Go": {
+    "de": ". Nehmt",
+    "bs": ". Uzmite"
+  },
+  "for a closer fit or": {
+    "de": "für einen engeren Sitz oder",
+    "bs": "za uži kroj ili"
+  },
+  "for more room.": {
+    "de": "für mehr Platz.",
+    "bs": "za više prostora."
+  },
+  "fits": {
+    "de": "passt bei",
+    "bs": "odgovara za"
+  },
+  "Size": {
+    "de": "Größe",
+    "bs": "Veličina"
+  },
+  "Slim fit": {
+    "de": "enger Sitz",
+    "bs": "uski kroj"
+  },
+  "Regular fit": {
+    "de": "normaler Sitz",
+    "bs": "standardni kroj"
+  },
+  "Relaxed fit": {
+    "de": "lockerer Sitz",
+    "bs": "širi kroj"
+  },
+  "days": {
+    "de": "Tage",
+    "bs": "dana"
+  },
+  "Age": {
+    "de": "Alter",
+    "bs": "Uzrast"
+  },
+  "· used for": {
+    "de": "· gilt für",
+    "bs": "· za"
+  },
+  "tops": {
+    "de": "Oberteile",
+    "bs": "majice"
+  },
+  "shorts": {
+    "de": "Shorts",
+    "bs": "šorceve"
+  },
+  "Your size": {
+    "de": "Eure Größe",
+    "bs": "Vaša veličina"
+  },
+  "Filled in a typical split for": {
+    "de": "Typische Verteilung eingetragen für",
+    "bs": "Upisana tipična raspodjela za"
+  },
+  "Add some sizes first": {
+    "de": "Tragt zuerst ein paar Größen ein",
+    "bs": "Prvo dodajte nekoliko veličina"
+  },
+  "Size list:\\n": {
+    "de": "Größenliste:\\n",
+    "bs": "Lista veličina:\\n"
+  },
+  "Added 1 ×": {
+    "de": "Hinzugefügt: 1 ×",
+    "bs": "Dodano 1 ×"
+  },
+  "to your team list": {
+    "de": "zur Teamliste",
+    "bs": "na listu tima"
+  },
+  "Save %s to shortlist": {
+    "de": "%s auf die Merkliste setzen",
+    "bs": "Sačuvaj %s na moju listu"
+  },
+  "Choose as many positions as you need — then pick how logos and numbers are applied.": {
+    "de": "Wählt so viele Positionen, wie ihr braucht — und dann, wie Logos und Nummern aufgebracht werden.",
+    "bs": "Odaberite koliko god pozicija trebate — a zatim kako se logotipi i brojevi nanose."
+  },
+  "Logo Application": {
+    "de": "Logo-Veredelung",
+    "bs": "Nanošenje logotipa"
+  },
+  "How your crest and logos go onto the shirt — printed in, pressed on or stitched.": {
+    "de": "Wie Wappen und Logos aufs Trikot kommen — eingedruckt, aufgepresst oder gestickt.",
+    "bs": "Kako grb i logotipi dolaze na dres — utisnuti, presovani ili izvezeni."
+  },
+  "Sublimated": {
+    "de": "Sublimiert",
+    "bs": "Sublimacija"
+  },
+  "Printed into the fabric. Weightless — can't crack or peel.": {
+    "de": "In den Stoff gedruckt. Federleicht — kann nicht brechen oder abblättern.",
+    "bs": "Utisnuto u tkaninu. Bez težine — ne može pucati ni ljuštiti se."
+  },
+  "DTF Print": {
+    "de": "DTF-Druck",
+    "bs": "DTF print"
+  },
+  "Direct-to-film transfer. Sharp detail and vivid colour on any fabric.": {
+    "de": "Direct-to-Film-Transfer. Scharfe Details und kräftige Farben auf jedem Stoff.",
+    "bs": "Direct-to-film transfer. Oštri detalji i žive boje na svakoj tkanini."
+  },
+  "Stitched Logo": {
+    "de": "Gesticktes Logo",
+    "bs": "Vezeni logo"
+  },
+  "Embroidered crest and logo with a raised, textured finish.": {
+    "de": "Gesticktes Wappen und Logo mit erhabener, strukturierter Oberfläche.",
+    "bs": "Vezeni grb i logo s izdignutom, teksturiranom završnom obradom."
+  },
+  "Premium": {
+    "de": "Premium",
+    "bs": "Premium"
+  },
+  "Number Application": {
+    "de": "Nummern-Veredelung",
+    "bs": "Nanošenje brojeva"
+  },
+  "Player numbers and names — choose the finish that suits your league and budget.": {
+    "de": "Spielernummern und Namen — wählt die Ausführung, die zu Liga und Budget passt.",
+    "bs": "Brojevi i imena igrača — odaberite izvedbu koja odgovara vašoj ligi i budžetu."
+  },
+  "Printed into the fabric. Lightest option, never peels.": {
+    "de": "In den Stoff gedruckt. Die leichteste Option, löst sich nie ab.",
+    "bs": "Utisnuto u tkaninu. Najlakša opcija, nikad se ne ljušti."
+  },
+  "Direct-to-film transfer. Crisp edges, multi-colour numbers possible.": {
+    "de": "Direct-to-Film-Transfer. Saubere Kanten, auch mehrfarbige Nummern möglich.",
+    "bs": "Direct-to-film transfer. Čiste ivice, mogući i višebojni brojevi."
+  },
+  "Flex Numbers": {
+    "de": "Flex-Nummern",
+    "bs": "Flex brojevi"
+  },
+  "Cut flex foil, heat-pressed on. The classic match-number look.": {
+    "de": "Geschnittene Flexfolie, aufgepresst. Der klassische Look für Spielnummern.",
+    "bs": "Rezana flex folija, presovana toplinom. Klasičan izgled brojeva za utakmice."
+  },
+  "Change Colours": {
+    "de": "Farben ändern",
+    "bs": "Promijeni boje"
+  },
+  "Pick a swatch or + for any colour": {
+    "de": "Farbfeld wählen oder + für jede Farbe",
+    "bs": "Odaberite boju ili + za bilo koju"
+  },
+  "Swap Base & Accent": {
+    "de": "Grund- & Akzentfarbe tauschen",
+    "bs": "Zamijeni osnovnu i akcent boju"
+  },
+  "Original Colours": {
+    "de": "Originalfarben",
+    "bs": "Originalne boje"
+  },
+  "Yellow": {
+    "de": "Gelb",
+    "bs": "Žuta"
+  },
+  "Navy": {
+    "de": "Marine",
+    "bs": "Tamnoplava"
+  },
+  "Pink": {
+    "de": "Pink",
+    "bs": "Roza"
+  },
+  "Checks": {
+    "de": "Karo",
+    "bs": "Kocke"
+  },
+  "Chest Band": {
+    "de": "Brustband",
+    "bs": "Traka na grudima"
+  },
+  "Centre Stripe": {
+    "de": "Mittelstreifen",
+    "bs": "Središnja pruga"
+  },
+  "Waves": {
+    "de": "Wellen",
+    "bs": "Valovi"
+  },
+  "Contrast Sleeves": {
+    "de": "Kontrastärmel",
+    "bs": "Kontrastni rukavi"
+  },
+  "Pixel Fade": {
+    "de": "Pixel-Verlauf",
+    "bs": "Pikselni prelaz"
+  },
+  "Save My Version": {
+    "de": "Meine Version speichern",
+    "bs": "Sačuvaj moju verziju"
+  },
+  "Any colour": {
+    "de": "Beliebige Farbe",
+    "bs": "Bilo koja boja"
+  },
+  "My Colours": {
+    "de": "Meine Farben",
+    "bs": "Moje boje"
+  },
+  "My version": {
+    "de": "Meine Version",
+    "bs": "Moja verzija"
+  },
+  "Saved your colour version to the shortlist": {
+    "de": "Eure Farbversion ist auf der Merkliste",
+    "bs": "Vaša verzija boja je sačuvana na listi"
+  },
+  "Not quite it?": {
+    "de": "Noch nicht das Richtige?",
+    "bs": "Nije baš to?"
+  },
+  "Want something one-of-a-kind?": {
+    "de": "Ihr wollt etwas Einzigartiges?",
+    "bs": "Želite nešto unikatno?"
+  },
+  "Our designers build a kit around your crest, colours and club story — your first 3D mockup is free and ready within 48 hours.": {
+    "de": "Unsere Designer entwerfen ein Trikot rund um euer Wappen, eure Farben und eure Vereinsgeschichte — das erste 3D-Mockup ist kostenlos und in 48 Stunden fertig.",
+    "bs": "Naši dizajneri kreiraju dres oko vašeg grba, boja i priče kluba — prvi 3D mockup je besplatan i gotov za 48 sati."
+  },
+  "Talk to a Designer": {
+    "de": "Mit einem Designer sprechen",
+    "bs": "Razgovarajte s dizajnerom"
+  },
+  "Keep browsing": {
+    "de": "Weiter stöbern",
+    "bs": "Nastavi pregledati"
+  },
+  "Shoulder Yoke": {
+    "de": "Schulterpasse",
+    "bs": "Ramena"
+  },
+  "Zigzag": {
+    "de": "Zickzack",
+    "bs": "Cik-cak"
+  },
+  "Diamonds": {
+    "de": "Rauten",
+    "bs": "Rombovi"
+  },
+  "Side Panels": {
+    "de": "Seiteneinsätze",
+    "bs": "Bočni paneli"
+  },
+  "Pin Hoops": {
+    "de": "Feine Ringel",
+    "bs": "Tanke horizontalne pruge"
+  },
+  "Lightning Bolt": {
+    "de": "Blitz",
+    "bs": "Munja"
+  },
+  "Custom design by our designers": {
+    "de": "Individuelles Design von unseren Designern",
+    "bs": "Unikatni dizajn naših dizajnera"
+  },
+  "Free 3D mockup within 48 hours": {
+    "de": "Kostenloses 3D-Mockup in 48 Stunden",
+    "bs": "Besplatan 3D mockup za 48 sati"
+  },
+  "Trim": {
+    "de": "Besatz",
+    "bs": "Rubovi"
+  }
+}
