@@ -70,6 +70,7 @@ Every event carries `page_type` (home / configurator / inspiration / size_guide 
 | `form_prefilled` | Quote form opens with answers taken from My Kit (once per page) | `kit_parts_filled` |
 | `share_kit` | "Share with your board" in My Kit | `kit_parts_filled` |
 | `shared_kit_open` | Someone opens a shared kit link | `kit_parts_filled` |
+| `photo_open` | A photo in the "On the pitch" reel is opened full screen | `item_name` (file) |
 | `season_banner_click` | Season order-by banner button | — |
 | `exit_intent_view` | Exit-intent "keep your kit" panel shown (desktop) | `kit_parts_filled` |
 

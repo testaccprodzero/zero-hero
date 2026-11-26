@@ -1687,6 +1687,68 @@
       .footer__bottom { flex-direction: column; }
     }
 
+    /* ── On the pitch: photo reel ── */
+    .reel {
+      position: relative; isolation: isolate; overflow: hidden;
+      padding: clamp(70px, 9vw, 130px) 0 clamp(70px, 8vw, 120px);
+      background: radial-gradient(50% 60% at 100% 0%, rgba(225,20,31,.12), transparent 70%), #08080a;
+    }
+    .reel__head {
+      display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 24px 60px;
+      max-width: 1520px; margin: 0 auto; padding: 0 var(--gutter);
+    }
+    .reel__head .eyebrow { margin-left: 10px; }
+    .reel__intro { max-width: 420px; padding-bottom: 8px; font-size: clamp(16px, 1.2vw, 19px); line-height: 1.5; color: rgba(255,255,255,.72); }
+    .reel__stage {
+      --h: clamp(170px, 19vw, 280px);
+      display: grid; gap: 14px; margin-top: clamp(40px, 5vw, 64px);
+      rotate: -2deg; width: 108%; margin-left: -4%;
+      -webkit-mask: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+              mask: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+      cursor: grab; touch-action: pan-y; user-select: none;
+    }
+    .reel__stage.is-drag { cursor: grabbing; }
+    .reel__row { overflow: hidden; }
+    .reel__track { display: flex; gap: 14px; width: max-content; list-style: none; margin: 0; padding: 0; will-change: transform; }
+    .shot {
+      position: relative; display: block; height: var(--h); padding: 0; border: 0; background: #141416; cursor: inherit;
+      clip-path: polygon(18px 0, 100% 0, calc(100% - 18px) 100%, 0 100%);
+      transition: filter .35s, scale .35s cubic-bezier(.2,.8,.2,1);
+    }
+    .shot img { display: block; height: 100%; width: auto; object-fit: cover; pointer-events: none; transition: scale .6s cubic-bezier(.2,.8,.2,1); }
+    .shot::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(0,0,0,.75)); opacity: 0; transition: opacity .3s; }
+    .shot__cap {
+      position: absolute; left: 26px; right: 26px; bottom: 14px; z-index: 1; display: grid; gap: 2px; text-align: left;
+      font-family: "Barlow Condensed", sans-serif; text-transform: uppercase; color: #fff;
+      opacity: 0; translate: 0 8px; transition: opacity .3s, translate .3s;
+    }
+    .shot__cap b { font-weight: 800; font-style: italic; font-size: 20px; line-height: 1; }
+    .shot__cap span { font-weight: 600; font-size: 12px; letter-spacing: .2em; color: var(--red, #e1141f); }
+    .reel__row:hover .shot { filter: grayscale(.85) brightness(.55); }
+    .reel__row .shot:hover, .reel__row .shot:focus-visible { filter: none; }
+    .shot:hover img, .shot:focus-visible img { scale: 1.06; }
+    .shot:hover::after, .shot:focus-visible::after, .shot:hover .shot__cap, .shot:focus-visible .shot__cap { opacity: 1; translate: 0 0; }
+    .shot:focus-visible { outline: none; filter: none; box-shadow: inset 0 0 0 3px var(--red, #e1141f); }
+    @media (hover: none) { .shot__cap { opacity: 1; translate: 0 0; } .shot::after { opacity: .9; } .shot__cap b { font-size: 16px; } }
+    @media (max-width: 860px) { .reel__head { grid-template-columns: 1fr; } .reel__stage { --h: 190px; rotate: -1.5deg; } }
+
+    /* full-screen photo viewer */
+    .lb-photo { width: 100vw; height: 100dvh; max-width: none; max-height: none; margin: 0; padding: 0; border: 0; background: rgba(5,5,6,.94); color: #fff; overflow: hidden; }
+    .lb-photo::backdrop { background: rgba(5,5,6,.6); backdrop-filter: blur(6px); }
+    .lb-photo[open] { display: grid; place-items: center; }
+    .lb-photo figure { margin: 0; display: grid; gap: 14px; justify-items: center; max-width: min(1400px, 92vw); }
+    .lb-photo img { max-width: 100%; max-height: calc(100dvh - 150px); object-fit: contain; box-shadow: 0 30px 80px rgba(0,0,0,.6); animation: lbpIn .35s cubic-bezier(.2,.8,.2,1); }
+    @keyframes lbpIn { from { opacity: 0; scale: .97; } }
+    .lb-photo figcaption { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; justify-content: center; font-family: "Barlow Condensed", sans-serif; text-transform: uppercase; letter-spacing: .08em; font-size: 16px; }
+    .lbp-count { color: var(--red, #e1141f); font-weight: 800; font-style: italic; letter-spacing: .04em; }
+    .lbp-btn { position: absolute; width: 52px; height: 52px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.18); background: rgba(17,17,20,.8); color: #fff; cursor: pointer; transition: background .2s, border-color .2s; }
+    .lbp-btn:hover, .lbp-btn:focus-visible { background: var(--red, #e1141f); border-color: var(--red, #e1141f); }
+    .lbp-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: square; }
+    .lbp-prev { left: 18px; top: 50%; translate: 0 -50%; }
+    .lbp-next { right: 18px; top: 50%; translate: 0 -50%; }
+    .lbp-close { right: 18px; top: 18px; }
+    @media (max-width: 700px) { .lbp-prev, .lbp-next { top: auto; bottom: 18px; translate: none; } .lb-photo img { max-height: calc(100dvh - 210px); } }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .fkit, .finale h2 .line > span { opacity: 1 !important; scale: 1 !important; transform: none !important; }
@@ -2066,6 +2128,137 @@
     <div class="sb__legs" aria-hidden="true"><i></i><i></i></div>
     <div class="crowd" aria-hidden="true"><svg id="crowd-svg" viewBox="0 0 1600 220" preserveAspectRatio="xMidYMax slice"></svg></div>
     <canvas class="confetti" id="confetti" aria-hidden="true"></canvas>
+  </section>
+
+  <!-- ON THE PITCH — approved club & lookbook photos (../assets/photos). Two drifting rows + full-screen viewer. -->
+  <section class="reel" id="photos" aria-labelledby="reel-title">
+    <div class="reel__head">
+      <div>
+        <p class="eyebrow"><span class="eyebrow__bars" aria-hidden="true"><i></i><i></i><i></i></span>Auf dem Platz</p>
+        <h2 id="reel-title">Getragen von<br /><span class="red">echten Vereinen</span></h2>
+      </div>
+      <p class="reel__intro">Echte Teams, echte Spieltage — und unser eigenes Lookbook. Ziehen zum Stöbern, Foto antippen zum Vergrößern.</p>
+    </div>
+    <div class="reel__stage">
+      <div class="reel__row" data-speed="0.35"><ul class="reel__track">
+            <li><button class="shot" type="button" data-full="../assets/photos/team-sunset-lg.jpg" aria-label="Jugend-Fußballteam in roten Trikots bei Sonnenuntergang">
+              <img data-src="../assets/photos/team-sunset.jpg" width="693" height="520" alt="Jugend-Fußballteam in roten Trikots bei Sonnenuntergang" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Sommercamp</b><span>Fußball · Jugend</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/team-krivaja-embrace-lg.jpg" aria-label="Zwei Spieler von NK Krivaja umarmen sich in roten Trikots">
+              <img data-src="../assets/photos/team-krivaja-embrace.jpg" width="520" height="520" alt="Zwei Spieler von NK Krivaja umarmen sich in roten Trikots" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>NK Krivaja</b><span>Fußball</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/team-lokomotiva-lg.jpg" aria-label="Mannschaftsfoto der Basketballer von KK Lokomotiva Mostar">
+              <img data-src="../assets/photos/team-lokomotiva.jpg" width="520" height="520" alt="Mannschaftsfoto der Basketballer von KK Lokomotiva Mostar" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>KK Lokomotiva</b><span>Basketball</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/team-fortuna-lg.jpg" aria-label="Fortuna Mostar in Gelb vor den Bergen">
+              <img data-src="../assets/photos/team-fortuna.jpg" width="520" height="520" alt="Fortuna Mostar in Gelb vor den Bergen" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Fortuna Mostar</b><span>Fußball</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/team-handball-women-lg.jpg" aria-label="Frauen-Handballteam mit Trainer">
+              <img data-src="../assets/photos/team-handball-women.jpg" width="853" height="520" alt="Frauen-Handballteam mit Trainer" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Frauenhandball</b><span>Handball</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/team-walkout-lg.jpg" aria-label="Der Kapitän läuft mit den Schiedsrichtern auf den Platz">
+              <img data-src="../assets/photos/team-walkout.jpg" width="693" height="520" alt="Der Kapitän läuft mit den Schiedsrichtern auf den Platz" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Spieltag</b><span>Fußball</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/team-handball-lime-lg.jpg" aria-label="Handballteam in limettengrünen Trikots">
+              <img data-src="../assets/photos/team-handball-lime.jpg" width="864" height="520" alt="Handballteam in limettengrünen Trikots" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Vereinshandball</b><span>Handball</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/team-handshake-lg.jpg" aria-label="Zwei junge Fußballer geben sich auf dem Platz die Hand">
+              <img data-src="../assets/photos/team-handshake.jpg" width="520" height="520" alt="Zwei junge Fußballer geben sich auf dem Platz die Hand" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>FK Radnički Lukavac</b><span>Fußball · Jugend</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/team-bluewhite-lg.jpg" aria-label="Fußballteam in blau-weißen Streifen">
+              <img data-src="../assets/photos/team-bluewhite.jpg" width="694" height="520" alt="Fußballteam in blau-weißen Streifen" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Erste Mannschaft</b><span>Fußball</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/team-archery-lg.jpg" aria-label="Bogenschützen in eigenen Shirts an der Alten Brücke in Mostar">
+              <img data-src="../assets/photos/team-archery.jpg" width="780" height="520" alt="Bogenschützen in eigenen Shirts an der Alten Brücke in Mostar" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Bogenschützenverein</b><span>Bogenschießen · Mostar</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/team-basketball-youth-lg.jpg" aria-label="Jugend-Basketballer geben sich nach dem Spiel die Hand">
+              <img data-src="../assets/photos/team-basketball-youth.jpg" width="520" height="520" alt="Jugend-Basketballer geben sich nach dem Spiel die Hand" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>KK Lokomotiva</b><span>Basketball · Jugend</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/team-handball-blue-lg.jpg" aria-label="Handballteam in blau-gelben Trikots">
+              <img data-src="../assets/photos/team-handball-blue.jpg" width="780" height="520" alt="Handballteam in blau-gelben Trikots" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Handball Senioren</b><span>Handball</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/team-futsal-lg.jpg" aria-label="Junger Futsal-Spieler am Ball">
+              <img data-src="../assets/photos/team-futsal.jpg" width="389" height="520" alt="Junger Futsal-Spieler am Ball" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Futsal-Akademie</b><span>Futsal · Jugend</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/team-youth-white-lg.jpg" aria-label="Jugend-Fußballteam in weißen Trikots">
+              <img data-src="../assets/photos/team-youth-white.jpg" width="693" height="520" alt="Jugend-Fußballteam in weißen Trikots" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Jugendakademie</b><span>Fußball · Jugend</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/team-action-pink-lg.jpg" aria-label="Fußballer in pink-blauen Trikots im Spiel">
+              <img data-src="../assets/photos/team-action-pink.jpg" width="520" height="520" alt="Fußballer in pink-blauen Trikots im Spiel" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Velika Reka</b><span>Fußball</span></span>
+            </button></li>
+          </ul></div>
+      <div class="reel__row reel__row--look" data-speed="-0.28"><ul class="reel__track">
+            <li><button class="shot" type="button" data-full="../assets/photos/look-backs-lg.jpg" aria-label="Zwei Spieler in passenden Trikots von hinten">
+              <img data-src="../assets/photos/look-backs.jpg" width="924" height="520" alt="Zwei Spieler in passenden Trikots von hinten" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Lookbook</b><span>Namen &amp; Nummern</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/look-pitch-lg.jpg" aria-label="Spieler in navy-pinkem Fußballtrikot in der Halle">
+              <img data-src="../assets/photos/look-pitch.jpg" width="347" height="520" alt="Spieler in navy-pinkem Fußballtrikot in der Halle" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Lookbook</b><span>Fußballtrikot</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/look-tank-blue-lg.jpg" aria-label="Nahaufnahme eines blauen Basketballtrikots mit ZERO-Logo">
+              <img data-src="../assets/photos/look-tank-blue.jpg" width="780" height="520" alt="Nahaufnahme eines blauen Basketballtrikots mit ZERO-Logo" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Lookbook</b><span>Basketball</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/look-pink-lg.jpg" aria-label="Spielerin in komplett pinkem Trikot">
+              <img data-src="../assets/photos/look-pink.jpg" width="347" height="520" alt="Spielerin in komplett pinkem Trikot" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Lookbook</b><span>Damentrikot</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/look-23-lg.jpg" aria-label="Basketballspielerin mit der Nummer 23 auf dem Rücken">
+              <img data-src="../assets/photos/look-23.jpg" width="347" height="520" alt="Basketballspielerin mit der Nummer 23 auf dem Rücken" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Lookbook</b><span>Basketball</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/look-green-lg.jpg" aria-label="Grün gestreiftes Fußballtrikot am Spieler">
+              <img data-src="../assets/photos/look-green.jpg" width="924" height="520" alt="Grün gestreiftes Fußballtrikot am Spieler" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Lookbook</b><span>Fußballtrikot</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/look-yellow-lg.jpg" aria-label="Gelb-schwarzes Trikot mit der Nummer 10">
+              <img data-src="../assets/photos/look-yellow.jpg" width="347" height="520" alt="Gelb-schwarzes Trikot mit der Nummer 10" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Lookbook</b><span>Volleyball</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/look-detail-lg.jpg" aria-label="Detail eines Navy-Trikots mit rotem Besatz">
+              <img data-src="../assets/photos/look-detail.jpg" width="924" height="520" alt="Detail eines Navy-Trikots mit rotem Besatz" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Lookbook</b><span>Stoff &amp; Schnitt</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/look-back-pink-lg.jpg" aria-label="Rückseite eines navy-pinken Fußballtrikots">
+              <img data-src="../assets/photos/look-back-pink.jpg" width="347" height="520" alt="Rückseite eines navy-pinken Fußballtrikots" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Lookbook</b><span>Fußballtrikot</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/look-4-lg.jpg" aria-label="Blaues Basketball-Trikot mit der Nummer 4">
+              <img data-src="../assets/photos/look-4.jpg" width="347" height="520" alt="Blaues Basketball-Trikot mit der Nummer 4" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Lookbook</b><span>Basketball</span></span>
+            </button></li>
+            <li><button class="shot" type="button" data-full="../assets/photos/look-touch-lg.jpg" aria-label="Spieler jongliert den Ball im grünen Trikot">
+              <img data-src="../assets/photos/look-touch.jpg" width="347" height="520" alt="Spieler jongliert den Ball im grünen Trikot" decoding="async" draggable="false" />
+              <span class="shot__cap"><b>Lookbook</b><span>Fußballtrikot</span></span>
+            </button></li>
+          </ul></div>
+    </div>
+    <dialog class="lb-photo" id="lb-photo" aria-label="Fotoansicht">
+      <figure>
+        <img id="lbp-img" alt="" />
+        <figcaption><span id="lbp-count" class="lbp-count"></span><span id="lbp-cap"></span>
+          <a class="btn btn--primary btn--sm" href="#contact" id="lbp-cta">Gratis-Mockup anfordern</a></figcaption>
+      </figure>
+      <button class="lbp-btn lbp-prev" type="button" id="lbp-prev" aria-label="Vorheriges Foto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="lbp-btn lbp-next" type="button" id="lbp-next" aria-label="Nächstes Foto"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+      <button class="lbp-btn lbp-close" type="button" id="lbp-close" aria-label="Schließen"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </dialog>
   </section>
 
   <!-- TESTIMONIALS — real partners; quote wording is drafted for their approval. -->
@@ -3131,5 +3324,84 @@
     })();
   </script>
   <script src="../assets/site.js"></script>
+<script>
+    // On the pitch: two endless rows that drift in opposite directions, speed up with page scroll,
+    // can be dragged/swiped, pause on hover, and open a full-screen viewer on click.
+    (() => {
+      const stage = document.querySelector('.reel__stage'); if (!stage) return;
+      const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const rows = [...stage.querySelectorAll('.reel__row')].map(row => {
+        const track = row.querySelector('.reel__track');
+        // a copy of the cards makes the loop seamless (hidden from screen readers and keyboard)
+        [...track.children].forEach(li => { const c = li.cloneNode(true); c.setAttribute('aria-hidden', 'true'); c.querySelector('button').tabIndex = -1; track.append(c); });
+        return { row, track, speed: parseFloat(row.dataset.speed) || .3, x: 0, half: 0 };
+      });
+      // the rows move and tilt, so the browser's lazy-loading can't tell what's visible — load them all once the section is near
+      new IntersectionObserver((en, io) => { if (!en[0].isIntersecting) return; io.disconnect(); stage.querySelectorAll('img[data-src]').forEach(i => { i.src = i.dataset.src; i.removeAttribute('data-src'); }); }, { rootMargin: '900px 0px' }).observe(stage);
+      const measure = () => rows.forEach(r => { r.half = r.track.scrollWidth / 2; });
+      measure(); addEventListener('resize', measure);
+      document.querySelectorAll('.reel__track img').forEach(img => img.complete || img.addEventListener('load', measure, { once: true }));
+
+      let hover = null, boost = 0, lastY = scrollY, drag = null, visible = false, raf = 0;
+      stage.addEventListener('pointerover', e => { hover = e.target.closest('.reel__row'); });
+      stage.addEventListener('pointerleave', () => { hover = null; });
+      addEventListener('scroll', () => { boost += Math.min(40, Math.abs(scrollY - lastY)) * .06; lastY = scrollY; }, { passive: true });
+      const wrap = r => { if (r.half) { r.x %= r.half; if (r.x > 0) r.x -= r.half; } };
+      const tick = () => {
+        boost *= .92;
+        rows.forEach(r => {
+          if (!drag && r.row !== hover && !reduce) r.x -= r.speed * (1 + boost);
+          wrap(r); r.track.style.transform = 'translate3d(' + r.x + 'px,0,0)';
+        });
+        raf = visible ? requestAnimationFrame(tick) : 0;
+      };
+      new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible && !raf) raf = requestAnimationFrame(tick); }).observe(stage);
+
+      // drag / swipe a row (a small movement still counts as a click)
+      let moved = 0;
+      stage.addEventListener('pointerdown', e => {
+        const row = e.target.closest('.reel__row'); if (!row || e.button > 0) return;
+        drag = { r: rows.find(r => r.row === row), x: e.clientX, y: e.clientY, id: e.pointerId, axis: null }; moved = 0;
+      });
+      addEventListener('pointermove', e => {
+        if (!drag || e.pointerId !== drag.id) return;
+        const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+        if (!drag.axis && Math.hypot(dx, dy) > 6) drag.axis = Math.abs(dx) > Math.abs(dy) ? 'x' : 'y';
+        if (drag.axis === 'y') { drag = null; return; } // vertical swipe = page scroll
+        if (drag.axis === 'x') { stage.classList.add('is-drag'); drag.r.x += dx; drag.x = e.clientX; drag.y = e.clientY; moved += Math.abs(dx); }
+      });
+      const end = () => { drag = null; stage.classList.remove('is-drag'); };
+      addEventListener('pointerup', end); addEventListener('pointercancel', end);
+
+      // full-screen viewer (originals only, not the loop copies)
+      const shots = [...stage.querySelectorAll('.reel__track > li:not([aria-hidden]) .shot')];
+      const dlg = document.getElementById('lb-photo'), img = document.getElementById('lbp-img');
+      let at = 0;
+      const show = i => {
+        at = (i + shots.length) % shots.length;
+        const b = shots[at], cap = b.querySelector('.shot__cap');
+        img.src = b.dataset.full; img.alt = b.getAttribute('aria-label');
+        img.style.animation = 'none'; void img.offsetWidth; img.style.animation = '';
+        document.getElementById('lbp-cap').textContent = cap.querySelector('b').textContent + ' · ' + cap.querySelector('span').textContent;
+        document.getElementById('lbp-count').textContent = String(at + 1).padStart(2, '0') + ' / ' + String(shots.length).padStart(2, '0');
+        const nx = new Image(); nx.src = shots[(at + 1) % shots.length].dataset.full; // preload the next one
+      };
+      stage.addEventListener('click', e => {
+        const b = e.target.closest('.shot'); if (!b || moved > 8) { moved = 0; return; }
+        const orig = b.closest('li').hasAttribute('aria-hidden') ? shots.find(s => s.dataset.full === b.dataset.full) : b;
+        show(shots.indexOf(orig)); dlg.showModal();
+        if (window.ZeroTrack) window.ZeroTrack.track('photo_open', { item_name: b.dataset.full.split('/').pop() });
+      });
+      document.getElementById('lbp-prev').addEventListener('click', () => show(at - 1));
+      document.getElementById('lbp-next').addEventListener('click', () => show(at + 1));
+      document.getElementById('lbp-close').addEventListener('click', () => dlg.close());
+      document.getElementById('lbp-cta').addEventListener('click', () => dlg.close());
+      dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+      dlg.addEventListener('keydown', e => { if (e.key === 'ArrowLeft') show(at - 1); if (e.key === 'ArrowRight') show(at + 1); });
+      let sx = null;
+      dlg.addEventListener('touchstart', e => { sx = e.touches[0].clientX; }, { passive: true });
+      dlg.addEventListener('touchend', e => { if (sx === null) return; const d = e.changedTouches[0].clientX - sx; if (Math.abs(d) > 50) show(at + (d < 0 ? 1 : -1)); sx = null; });
+    })();
+  </script>
 </body>
 </html>
