@@ -151,13 +151,16 @@ function confirmEmail_(d) {
   const first = esc_(String(d.name || '').split(/\s+/)[0] || '');
   const fill = s => s.replace('{first}', first).replace('{club}', esc_(d.club));
   const red = '#e1141f', ink = '#0b0b0d';
-  const font = "font-family:'Barlow',Arial,Helvetica,sans-serif;";
-  const cond = "font-family:'Barlow Condensed','Arial Narrow',Arial,sans-serif;";
+  // mail apps mostly ignore web fonts — the fallbacks are chosen to look right on their own
+  const font = "font-family:'Barlow','Helvetica Neue',Helvetica,Arial,sans-serif;";
+  const cond = "font-family:'Barlow Condensed','Helvetica Neue',Helvetica,Arial,sans-serif;";
   const row = (k, v) => v ? `<tr><td style="${font}padding:6px 16px 6px 0;color:#6b6b73;font-size:13px;vertical-align:top;white-space:nowrap">${k}</td><td style="${font}padding:6px 0;color:${ink};font-size:14px;font-weight:600">${esc_(v)}</td></tr>` : '';
   const kitLines = String(d.kit_summary || '').split('\n').filter(Boolean)
     .filter(l => !/^(Sizes: To follow|Größen: Folgt|Veličine: Naknadno)/.test(l))
-    .map(l => `<div style="${font}font-size:13px;line-height:1.5;color:#2b2b30;padding:2px 0">${esc_(l)}</div>`).join('');
-  const btn = (href, label, bg, color) => `<a href="${href}" style="${cond}display:inline-block;padding:13px 22px;margin:0 8px 8px 0;background:${bg};color:${color};font-size:16px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none">${label} &rarr;</a>`;
+    .map(l => l.replace(/\s*\[#[^\]]*\]/g, '').replace(/^(Options|Optionen|Opcije): /, ''))   // no colour codes for the buyer
+    .reduce((all, l) => all.concat(l.split('; ')), [])                                         // one option per line
+    .map(l => `<div style="${font}font-size:14px;line-height:1.5;color:#2b2b30;padding:2px 0">${esc_(l)}</div>`).join('');
+  const btn = (href, label, bg, color) => `<a class="btn" href="${href}" style="${cond}display:inline-block;text-align:center;padding:14px 22px;margin:0 8px 8px 0;background:${bg};color:${color};font-size:16px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none">${label} &rarr;</a>`;
   const replyTo = String(SETTINGS.salesEmail).split(',')[0].trim();
   const waBtn = SETTINGS.whatsapp ? btn(`https://wa.me/${SETTINGS.whatsapp}`, t.wa, '#25d366', ink) : '';
   const steps = t.steps.map((st, i) => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 14px"><tr>
@@ -166,39 +169,49 @@ function confirmEmail_(d) {
       <div style="${font}font-size:14px;line-height:1.5;color:#55555c;margin-top:2px">${st[1]}</div></td></tr></table>`).join('');
 
   const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light only">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;1,800&family=Barlow:wght@400;600&display=swap" rel="stylesheet"></head>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;1,800&family=Barlow:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  @media only screen and (max-width: 620px) {
+    .outer { padding: 0 !important; }
+    .card { width: 100% !important; }
+    .px { padding-left: 20px !important; padding-right: 20px !important; }
+    .h1 { font-size: 34px !important; }
+    .btn { display: block !important; margin: 0 0 10px !important; }
+    .logo { width: 120px !important; }
+  }
+</style></head>
 <body style="margin:0;padding:0;background:#ececef">
 <div style="display:none;max-height:0;overflow:hidden">${t.pre}</div>
-<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#ececef"><tr><td align="center" style="padding:24px 12px">
-<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#ffffff">
-  <tr><td style="background:${ink};padding:28px 32px 22px">
-    <img src="${SETTINGS.logoUrl}" width="150" alt="ZERO" style="display:block;width:150px;max-width:150px;height:auto;border:0;${cond}font-size:28px;font-weight:800;font-style:italic;color:#ffffff">
-  </td></tr>
-  <tr><td style="background:${ink};padding:0 32px"><table role="presentation" cellpadding="0" cellspacing="0"><tr>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#ececef"><tr><td class="outer" align="center" style="padding:24px 12px">
+<table class="card" role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#ffffff">
+  <tr><td class="px" style="background:${ink};padding:28px 32px 34px">
+    <img class="logo" src="${SETTINGS.logoUrl}" width="150" alt="ZERO" style="display:block;width:150px;max-width:150px;height:auto;border:0;${cond}font-size:28px;font-weight:800;font-style:italic;color:#ffffff">
+    <div style="height:22px;line-height:22px;font-size:0">&nbsp;</div>
+    <table role="presentation" cellpadding="0" cellspacing="0"><tr>
     <td style="width:22px;height:5px;background:${red};font-size:0;line-height:0">&nbsp;</td><td style="width:6px;font-size:0">&nbsp;</td>
     <td style="width:22px;height:5px;background:${red};font-size:0;line-height:0">&nbsp;</td><td style="width:6px;font-size:0">&nbsp;</td>
-    <td style="width:22px;height:5px;background:${red};font-size:0;line-height:0">&nbsp;</td></tr></table></td></tr>
-  <tr><td style="background:${ink};padding:20px 32px 34px">
+    <td style="width:22px;height:5px;background:${red};font-size:0;line-height:0">&nbsp;</td></tr></table>
+    <div style="height:18px;line-height:18px;font-size:0">&nbsp;</div>
     <div style="${cond}font-size:13px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:${red}">${t.kicker}</div>
-    <div style="${cond}font-size:42px;line-height:1;font-weight:800;font-style:italic;text-transform:uppercase;color:#ffffff;margin-top:8px">${fill(t.title)}</div>
+    <div class="h1" style="${cond}font-size:42px;line-height:1;font-weight:800;font-style:italic;text-transform:uppercase;color:#ffffff;margin-top:8px">${fill(t.title)}</div>
   </td></tr>
-  <tr><td style="padding:30px 32px 6px">
+  <tr><td class="px" style="padding:30px 32px 6px">
     <p style="${font}margin:0 0 20px;font-size:16px;line-height:1.55;color:#2b2b30">${fill(t.intro)}</p>
     ${steps}
   </td></tr>
-  <tr><td style="padding:10px 32px 8px">
+  <tr><td class="px" style="padding:10px 32px 8px">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f6;border-left:4px solid ${red}"><tr><td style="padding:18px 20px">
       <div style="${cond}font-size:15px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${ink};margin-bottom:6px">${t.summary}</div>
       <table role="presentation" cellpadding="0" cellspacing="0">${row(t.club, d.club)}${row(t.sport, d.sport)}${row(t.players, d.team_size)}${row(t.when, d.needed_by)}</table>
       ${kitLines ? `<div style="${cond}font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#6b6b73;margin:12px 0 4px">${t.kit}</div>${kitLines}` : ''}
     </td></tr></table>
   </td></tr>
-  <tr><td style="padding:22px 32px 4px">
+  <tr><td class="px" style="padding:22px 32px 4px">
     ${btn(`mailto:${replyTo}?subject=${encodeURIComponent('Re: ' + (d.club || 'Kit request'))}`, t.reply, red, '#ffffff')}${waBtn}
     <p style="${font}margin:8px 0 0;font-size:13px;line-height:1.5;color:#6b6b73">${t.note}</p>
   </td></tr>
-  <tr><td style="padding:22px 32px 30px"><p style="${font}margin:0;font-size:14px;color:#2b2b30">${t.sign}</p></td></tr>
-  <tr><td style="background:${ink};padding:20px 32px">
+  <tr><td class="px" style="padding:22px 32px 30px"><p style="${font}margin:0;font-size:14px;color:#2b2b30">${t.sign}</p></td></tr>
+  <tr><td class="px" style="background:${ink};padding:20px 32px">
     <a href="${SETTINGS.siteUrl}" style="${cond}color:#ffffff;font-size:14px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-decoration:none">${t.site} &rarr;</a>
     ${SETTINGS.address ? `<div style="${font}font-size:12px;color:#8a8a92;margin-top:8px">${esc_(SETTINGS.address)}</div>` : ''}
   </td></tr>
