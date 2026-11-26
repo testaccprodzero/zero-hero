@@ -2719,8 +2719,9 @@
             it.vel += (nv - it.vel) * .35;
             it.th += (target - it.th) * .35;
           } else {
-            const wind = reduce ? 0 : Math.sin(t * .8 + it.phase) * .22 + Math.sin(t * 2.1 + it.phase * 1.7) * .1;
-            const acc = -K * Math.sin(it.th) - D * it.vel + wind;
+            // the jersey under the cursor settles (strong damping, no breeze) so it's easy to catch and click
+            const wind = reduce || it.hover ? 0 : Math.sin(t * .8 + it.phase) * .22 + Math.sin(t * 2.1 + it.phase * 1.7) * .1;
+            const acc = -K * Math.sin(it.th) - (it.hover ? 7 : D) * it.vel + wind;
             it.vel += acc * dt;
             it.th += it.vel * dt;
           }
@@ -2750,11 +2751,12 @@
         const px = e.clientX - r.left, py = e.clientY - r.top, now = performance.now();
         if (lastPX !== null) {
           const vx = (px - lastPX) / Math.max(1, now - lastPT); // px per ms
-          for (const it of items) {
-            if (it.drag) continue;
+          // only a quick flick through the line swings the jerseys — normal mouse movement leaves them alone
+          if (Math.abs(vx) > .9) for (const it of items) {
+            if (it.drag || it.hover) continue;
             const y = yAt(it.x);
             if (Math.abs(px - it.x) < it.w * .55 && py > y && py < y + it.w * 1.35)
-              it.vel -= vx * .55; // pushing right swings the bottom right (negative angle)
+              it.vel -= Math.max(-.5, Math.min(.5, vx * .18)); // pushing right swings the bottom right (negative angle)
           }
         }
         lastPX = px; lastPT = now;
@@ -2770,6 +2772,8 @@
 
       // ── grab & fling (mouse/pen); tap or click opens ──
       items.forEach(it => {
+        it.el.addEventListener('pointerenter', e => { if (e.pointerType !== 'touch') it.hover = true; });
+        it.el.addEventListener('pointerleave', () => { it.hover = false; });
         it.el.addEventListener('pointerdown', e => {
           if (e.button !== 0) return;
           it.drag = { sx: e.clientX, sy: e.clientY, t0: performance.now(), moved: 0, target: it.th, touch: e.pointerType === 'touch' };
@@ -2786,7 +2790,7 @@
         const end = e => {
           const d = it.drag; if (!d) return;
           it.drag = null;
-          const isClick = d.moved < 6 && performance.now() - d.t0 < 500;
+          const isClick = d.moved < 12 && performance.now() - d.t0 < 700; // forgiving: a slightly shaky or slow click still opens
           if (d.touch || isClick) { if (e.type === 'pointerup') { it.vel += (Math.random() - .5) * 1.5; open(it.i); } }
         };
         it.el.addEventListener('pointerup', end);
