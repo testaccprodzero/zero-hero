@@ -60,7 +60,9 @@
     if (CFG.ga4) {
       loadScript(`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(CFG.ga4)}`);
       gtag('js', new Date());
-      gtag('config', CFG.ga4, { page_type: PAGE_TYPE, site_language: LANG, ...(debug ? { debug_mode: true } : {}) });
+      // debug: GA4 only honours debug_mode per event, so the page_view is sent by hand with the flag
+      gtag('config', CFG.ga4, { page_type: PAGE_TYPE, site_language: LANG, ...(debug ? { send_page_view: false } : {}) });
+      if (debug) gtag('event', 'page_view', { page_type: PAGE_TYPE, site_language: LANG, debug_mode: true });
       queue.splice(0).forEach(([n, p]) => gtag('event', n, p));
     }
     if (CFG.gtm) { window.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' }); loadScript(`https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(CFG.gtm)}`); }
@@ -72,7 +74,7 @@
 
   // ── the one helper every event goes through (never pass names, emails or phone numbers) ──
   function track(name, params = {}) {
-    const p = { page_type: PAGE_TYPE, site_language: LANG, ...params };
+    const p = { page_type: PAGE_TYPE, site_language: LANG, ...params, ...(debug ? { debug_mode: true } : {}) }; // debug_mode → shows in GA4 DebugView
     window.dataLayer.push({ event: name, ...p }); // for GTM (if added later)
     if (CFG.ga4) { if (loaded) gtag('event', name, p); else queue.push([name, p]); }
     if (debug) console.log('%c[track]', 'color:#e1141f;font-weight:bold', name, p);
