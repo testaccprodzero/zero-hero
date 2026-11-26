@@ -50,7 +50,7 @@
     analytics: {
       ga4: 'G-3PMVCYYWNY', // GA4 Measurement ID, e.g. 'G-ABC123XYZ' — loads GA4 directly (no Tag Manager needed)
       gtm: 'GTM-MX3MW64T', // Google Tag Manager ID, e.g. 'GTM-ABC1234' — for ad pixels later
-      clarity: '',        // Microsoft Clarity project ID, e.g. 'abcd1234ef'
+      clarity: 'zjqsuvmp5y', // Microsoft Clarity project ID, e.g. 'abcd1234ef'
       consentPreview: true, // show the cookie banner even while no IDs are set (draft review); set false at launch if you track nothing
     },
     lead: {
