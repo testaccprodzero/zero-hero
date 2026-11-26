@@ -13,10 +13,14 @@
 const SETTINGS = {
   salesEmail: 'you@example.com',          // who gets the alert for every new request (comma-separate several)
   fromName: 'ZERO Teamwear',
-  sendConfirmation: true,                 // email the buyer a "we got your request" note in their language
-  replyHours: 'one working day',          // used in the confirmation text
+  sendConfirmation: true,                 // email the buyer a branded "we got your request" email in their language
   logoFolderName: 'ZERO — Club logos',    // Drive folder for uploaded crests (created automatically)
   sheetName: 'Requests',
+  // branding for the confirmation email
+  siteUrl: 'https://testaccprodzero.github.io/zero-hero/',                                         // your website (change at launch)
+  logoUrl: 'https://raw.githubusercontent.com/testaccprodzero/zero-hero/main/assets/zero-logo.png', // white ZERO logo, publicly reachable
+  whatsapp: '',                           // digits only, e.g. '38761234567' — adds a WhatsApp button; '' hides it
+  address: '',                            // optional footer line, e.g. 'ZERO Teamwear · Street 1 · 88000 Mostar'
 };
 
 const COLUMNS = [
@@ -122,13 +126,100 @@ function alert_(d) {
   MailApp.sendEmail({ to: SETTINGS.salesEmail, subject: `New quote request — ${d.club} (${d.sport || 'kit'})`, htmlBody: html, replyTo: d.email, name: SETTINGS.fromName });
 }
 
+// ── buyer confirmation: branded HTML (+ plain-text fallback), in the buyer's language ──
+const MAIL_TEXT = {
+  en: { subject: 'We received your kit request — ZERO Teamwear', pre: 'Your free 3D mockup is on its way.', kicker: 'Request received', title: 'Thanks, {first}!',
+    intro: 'We’ve got your request for <b>{club}</b>. Here’s what happens next:',
+    steps: [['Within 1 working day', 'A kit specialist gets in touch to go through colours, crest and sponsors.'], ['Within 48 hours', 'You receive your free 3D mockup — we change anything until it’s right.'], ['3–4 weeks', 'Once you approve, we produce and deliver your kit.']],
+    summary: 'Your request', club: 'Club', sport: 'Sport', players: 'Players', when: 'Needed by', kit: 'My Kit',
+    reply: 'Reply with crest & colours', wa: 'Chat on WhatsApp', note: 'Just reply to this email to add anything — your crest, sponsor logos or colour ideas.', site: 'Visit our website', sign: 'The ZERO Teamwear team' },
+  de: { subject: 'Eure Trikot-Anfrage ist da — ZERO Teamwear', pre: 'Euer kostenloses 3D-Mockup ist unterwegs.', kicker: 'Anfrage erhalten', title: 'Danke, {first}!',
+    intro: 'Wir haben eure Anfrage für <b>{club}</b> erhalten. So geht es weiter:',
+    steps: [['Innerhalb eines Werktags', 'Ein Trikot-Experte meldet sich, um Farben, Wappen und Sponsoren zu besprechen.'], ['Innerhalb von 48 Stunden', 'Ihr bekommt euer kostenloses 3D-Mockup — wir ändern alles, bis es passt.'], ['3–4 Wochen', 'Nach eurer Freigabe produzieren und liefern wir eure Trikots.']],
+    summary: 'Eure Anfrage', club: 'Verein', sport: 'Sportart', players: 'Spieler', when: 'Benötigt bis', kit: 'Mein Kit',
+    reply: 'Wappen & Farben senden', wa: 'Per WhatsApp schreiben', note: 'Antwortet einfach auf diese E-Mail, um etwas zu ergänzen — Wappen, Sponsorenlogos oder Farbideen.', site: 'Zur Website', sign: 'Euer ZERO Teamwear Team' },
+  bs: { subject: 'Primili smo vaš upit za dresove — ZERO Teamwear', pre: 'Vaš besplatni 3D mockup je na putu.', kicker: 'Upit primljen', title: 'Hvala, {first}!',
+    intro: 'Primili smo vaš upit za <b>{club}</b>. Evo šta slijedi:',
+    steps: [['U roku od 1 radnog dana', 'Naš stručnjak za dresove javit će se da prođete boje, grb i sponzore.'], ['U roku od 48 sati', 'Dobijate besplatan 3D mockup — mijenjamo sve dok ne bude kako treba.'], ['3–4 sedmice', 'Nakon vašeg odobrenja proizvodimo i isporučujemo vaše dresove.']],
+    summary: 'Vaš upit', club: 'Klub', sport: 'Sport', players: 'Igrači', when: 'Potrebno do', kit: 'Moj komplet',
+    reply: 'Pošaljite grb i boje', wa: 'Pišite nam na WhatsApp', note: 'Samo odgovorite na ovaj e-mail da nešto dodate — grb, logotipe sponzora ili ideje za boje.', site: 'Posjetite našu stranicu', sign: 'Vaš ZERO Teamwear tim' },
+};
+
+/** Builds the confirmation email (pure function — also used for the preview). */
+function confirmEmail_(d) {
+  const t = MAIL_TEXT[d.language] || MAIL_TEXT.en;
+  const first = esc_(String(d.name || '').split(/\s+/)[0] || '');
+  const fill = s => s.replace('{first}', first).replace('{club}', esc_(d.club));
+  const red = '#e1141f', ink = '#0b0b0d';
+  const font = "font-family:'Barlow',Arial,Helvetica,sans-serif;";
+  const cond = "font-family:'Barlow Condensed','Arial Narrow',Arial,sans-serif;";
+  const row = (k, v) => v ? `<tr><td style="${font}padding:6px 16px 6px 0;color:#6b6b73;font-size:13px;vertical-align:top;white-space:nowrap">${k}</td><td style="${font}padding:6px 0;color:${ink};font-size:14px;font-weight:600">${esc_(v)}</td></tr>` : '';
+  const kitLines = String(d.kit_summary || '').split('\n').filter(Boolean)
+    .filter(l => !/^(Sizes: To follow|Größen: Folgt|Veličine: Naknadno)/.test(l))
+    .map(l => `<div style="${font}font-size:13px;line-height:1.5;color:#2b2b30;padding:2px 0">${esc_(l)}</div>`).join('');
+  const btn = (href, label, bg, color) => `<a href="${href}" style="${cond}display:inline-block;padding:13px 22px;margin:0 8px 8px 0;background:${bg};color:${color};font-size:16px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;text-decoration:none">${label} &rarr;</a>`;
+  const replyTo = String(SETTINGS.salesEmail).split(',')[0].trim();
+  const waBtn = SETTINGS.whatsapp ? btn(`https://wa.me/${SETTINGS.whatsapp}`, t.wa, '#25d366', ink) : '';
+  const steps = t.steps.map((st, i) => `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0 0 14px"><tr>
+      <td style="width:46px;vertical-align:top"><div style="${cond}width:34px;height:34px;line-height:34px;text-align:center;background:${i === 0 ? red : ink};color:#ffffff;font-size:17px;font-weight:800;font-style:italic">0${i + 1}</div></td>
+      <td style="vertical-align:top"><div style="${cond}font-size:17px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:${ink}">${st[0]}</div>
+      <div style="${font}font-size:14px;line-height:1.5;color:#55555c;margin-top:2px">${st[1]}</div></td></tr></table>`).join('');
+
+  const html = `<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light only">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;1,800&family=Barlow:wght@400;600&display=swap" rel="stylesheet"></head>
+<body style="margin:0;padding:0;background:#ececef">
+<div style="display:none;max-height:0;overflow:hidden">${t.pre}</div>
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#ececef"><tr><td align="center" style="padding:24px 12px">
+<table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:100%;max-width:600px;background:#ffffff">
+  <tr><td style="background:${ink};padding:28px 32px 22px">
+    <img src="${SETTINGS.logoUrl}" width="150" alt="ZERO" style="display:block;width:150px;max-width:150px;height:auto;border:0;${cond}font-size:28px;font-weight:800;font-style:italic;color:#ffffff">
+  </td></tr>
+  <tr><td style="background:${ink};padding:0 32px"><table role="presentation" cellpadding="0" cellspacing="0"><tr>
+    <td style="width:22px;height:5px;background:${red};font-size:0;line-height:0">&nbsp;</td><td style="width:6px;font-size:0">&nbsp;</td>
+    <td style="width:22px;height:5px;background:${red};font-size:0;line-height:0">&nbsp;</td><td style="width:6px;font-size:0">&nbsp;</td>
+    <td style="width:22px;height:5px;background:${red};font-size:0;line-height:0">&nbsp;</td></tr></table></td></tr>
+  <tr><td style="background:${ink};padding:20px 32px 34px">
+    <div style="${cond}font-size:13px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:${red}">${t.kicker}</div>
+    <div style="${cond}font-size:42px;line-height:1;font-weight:800;font-style:italic;text-transform:uppercase;color:#ffffff;margin-top:8px">${fill(t.title)}</div>
+  </td></tr>
+  <tr><td style="padding:30px 32px 6px">
+    <p style="${font}margin:0 0 20px;font-size:16px;line-height:1.55;color:#2b2b30">${fill(t.intro)}</p>
+    ${steps}
+  </td></tr>
+  <tr><td style="padding:10px 32px 8px">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f6;border-left:4px solid ${red}"><tr><td style="padding:18px 20px">
+      <div style="${cond}font-size:15px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:${ink};margin-bottom:6px">${t.summary}</div>
+      <table role="presentation" cellpadding="0" cellspacing="0">${row(t.club, d.club)}${row(t.sport, d.sport)}${row(t.players, d.team_size)}${row(t.when, d.needed_by)}</table>
+      ${kitLines ? `<div style="${cond}font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#6b6b73;margin:12px 0 4px">${t.kit}</div>${kitLines}` : ''}
+    </td></tr></table>
+  </td></tr>
+  <tr><td style="padding:22px 32px 4px">
+    ${btn(`mailto:${replyTo}?subject=${encodeURIComponent('Re: ' + (d.club || 'Kit request'))}`, t.reply, red, '#ffffff')}${waBtn}
+    <p style="${font}margin:8px 0 0;font-size:13px;line-height:1.5;color:#6b6b73">${t.note}</p>
+  </td></tr>
+  <tr><td style="padding:22px 32px 30px"><p style="${font}margin:0;font-size:14px;color:#2b2b30">${t.sign}</p></td></tr>
+  <tr><td style="background:${ink};padding:20px 32px">
+    <a href="${SETTINGS.siteUrl}" style="${cond}color:#ffffff;font-size:14px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;text-decoration:none">${t.site} &rarr;</a>
+    ${SETTINGS.address ? `<div style="${font}font-size:12px;color:#8a8a92;margin-top:8px">${esc_(SETTINGS.address)}</div>` : ''}
+  </td></tr>
+</table></td></tr></table></body></html>`;
+
+  const strip = s => s.replace(/<[^>]+>/g, '');
+  const text = [strip(fill(t.title)), '', strip(fill(t.intro)), '',
+    ...t.steps.map((st, i) => `${i + 1}. ${st[0]} — ${st[1]}`), '',
+    `${t.summary}: ${d.club || ''} · ${d.sport || ''} · ${d.team_size || ''} · ${d.needed_by || ''}`,
+    d.kit_summary ? `${t.kit}:\n${d.kit_summary}` : '', '', t.note, '', t.sign, SETTINGS.siteUrl].join('\n');
+  return { subject: t.subject, html, text };
+}
+
 function confirm_(d) {
-  const first = String(d.name || '').split(/\s+/)[0];
-  const T = {
-    en: { s: 'We received your kit request — ZERO Teamwear', b: `Hi ${first},\n\nthanks for your request for ${d.club}. A kit specialist will get back to you within ${SETTINGS.replyHours}, and your free 3D mockup follows within 48 hours.\n\nJust reply to this email if you'd like to add anything — colours, sponsors or your crest.\n\nZERO Teamwear` },
-    de: { s: 'Eure Trikot-Anfrage ist da — ZERO Teamwear', b: `Hallo ${first},\n\ndanke für eure Anfrage für ${d.club}. Ein Trikot-Experte meldet sich innerhalb eines Werktags, euer kostenloses 3D-Mockup folgt innerhalb von 48 Stunden.\n\nAntwortet einfach auf diese E-Mail, wenn ihr noch etwas ergänzen möchtet — Farben, Sponsoren oder euer Wappen.\n\nZERO Teamwear` },
-    bs: { s: 'Primili smo vaš upit za dresove — ZERO Teamwear', b: `Zdravo ${first},\n\nhvala na upitu za ${d.club}. Naš stručnjak za dresove javit će vam se u roku od jednog radnog dana, a besplatan 3D mockup stiže u roku od 48 sati.\n\nSamo odgovorite na ovaj e-mail ako želite nešto dodati — boje, sponzore ili grb.\n\nZERO Teamwear` },
-  };
-  const t = T[d.language] || T.en;
-  MailApp.sendEmail({ to: d.email, subject: t.s, body: t.b, name: SETTINGS.fromName, replyTo: String(SETTINGS.salesEmail).split(',')[0].trim() });
+  const m = confirmEmail_(d);
+  MailApp.sendEmail({ to: d.email, subject: m.subject, body: m.text, htmlBody: m.html, name: SETTINGS.fromName, replyTo: String(SETTINGS.salesEmail).split(',')[0].trim() });
+}
+
+/** Optional: select this in the editor and ▶ Run to email yourself the confirmation in all three languages. */
+function testConfirmation() {
+  ['en', 'de', 'bs'].forEach(lang => confirm_({ language: lang, name: 'Kenan Test', club: 'FK Test Club', email: String(SETTINGS.salesEmail).split(',')[0].trim(),
+    sport: 'Football', team_size: '20–50', needed_by: 'Within 1–2 months',
+    kit_summary: 'Design: Inferno Checks [#c8102e / #141416 / #ffffff]\nOptions: Collar: V-Neck; Logo Application: Stitched Logo; Number Application: Flex Numbers\nSizes: Men M × 12, Men L × 8 — 20 pieces' }));
 }
